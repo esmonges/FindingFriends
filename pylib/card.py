@@ -1,7 +1,6 @@
 class Card(object):
     """Class representing an individual card"""
     NUMBERS = (
-    	'ONE',
     	'TWO',
     	'THREE',
     	'FOUR',
@@ -44,6 +43,9 @@ class Card(object):
 
         self.suit = suit
         self.number = number
+
+    def __repr__(self):
+        return "%s(%r, %r)" % ('Card', self.suit, self.number)
 
     @classmethod
     # Getter for NUMBERS constant
