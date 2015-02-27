@@ -3,7 +3,7 @@ from card import Card
 
 class Card_Test(unittest.TestCase):
     def setUp(self):
-        self.numbers = Card.getNumbers() + Card.getJokerNumber()
+        self.numbers = Card.getNumbers()
         self.suits = Card.getSuits()
         self.jokersuits = Card.getJokerSuits()
 
@@ -13,21 +13,56 @@ class Card_Test(unittest.TestCase):
                 # Special case for jokers
                 if (number == 'JOKER'):
                     with self.assertRaises(AssertionError):
-                        Card(suit, number)
+                        Card(suit=suit, number=number)
                 else:
-                    Card(suit, number)
+                    Card(suit=suit, number=number)
 
     def test_jokerSuits(self):
         for suit in self.jokersuits:
-            Card(suit, 'JOKER')
+            Card(suit=suit, number='JOKER')
 
     def test_badSuit(self):
         with self.assertRaises(AssertionError):
-            Card('LOLNO', 'ONE')
+            Card(suit='LOLNO', number='ACE')
 
     def test_badNumber(self):
         with self.assertRaises(AssertionError):
-            Card('SPADE', 'TREEFIDDY')
+            Card(suit='SPADE', number='TREEFIDDY')
+
+    def test_eq(self):
+        for suit1 in self.suits:
+            for suit2 in self.suits:
+                suitsequal = (suit1 == suit2)
+                for number1 in self.numbers:
+                    for number2 in self.numbers:
+                        if (
+                            (number1 == 'JOKER' and suit1 not in self.jokersuits)
+                            or (number2 == 'JOKER' and suit2 not in self.jokersuits)
+                        ):
+                            continue
+                        numbersequal = (number1 == number2)
+                        cardsequal = (numbersequal and suitsequal)
+                        card1 = Card(suit=suit1, number=number1)
+                        card2 = Card(suit=suit2, number=number2)
+                        self.assertEqual(cardsequal, card1 == card2)
+
+    def test_lt(self):
+        a = Card(suit='DIAMOND', number='ACE')
+        b = Card(suit='DIAMOND', number='TEN')
+        self.assertTrue(a > b)
+        self.assertTrue(a >= b)
+        self.assertFalse(a < b)
+        self.assertFalse(a <= b)
+        b = Card(suit='DIAMOND', number='ACE')
+        self.assertFalse(a > b)
+        self.assertTrue(a >= b)
+        self.assertFalse(a < b)
+        self.assertTrue(a <= b)
+        b = Card(suit='BIG', number='JOKER')
+        self.assertFalse(a > b)
+        self.assertFalse(a >= b)
+        self.assertTrue(a < b)
+        self.assertTrue(a <= b)
 
 if __name__ == '__main__':
     unittest.main()
