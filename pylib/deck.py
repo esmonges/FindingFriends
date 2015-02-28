@@ -3,6 +3,16 @@ import random
 
 class Deck(object):
     """Object representing a deck that can contain any multiple of 54 cards"""
+    # Deck - Constructor
+    #
+    # Constructs a deck with a given number of cardsets. For each cardset, an
+    # individual 54 card deck will be constructed and pushed to the playing deck
+    #
+    # args:
+    #   cardsets: Number of sets of 54 cards to use
+    #
+    # returns:
+    #   Deck object
     def __init__(self, cardsets):
         super(Deck, self).__init__()
         assert (cardsets >= 1)
@@ -10,16 +20,33 @@ class Deck(object):
         self.generateDeck()
         self.shuffleDeck()
 
+    # __repr__
+    # Python representation for this deck
     def __repr__(self):
         return "%s(%r)" % ('Deck', self.cardsets)
 
+    # __str__
+    # string representation of the deck
     def __str__(self):
         return str(self.deck)
 
+    # generateDeck
+    #
+    # Generates a deck based on the number of cardsets
+    #
+    # args:
+    #   none
+    #
+    # returns:
+    #   nothing
+    #
+    # effects:
+    #   Creates a deck of self.cardsets * 54 cards containing self.cardsets
+    #   copies of each individual card
     def generateDeck(self):
         self.deck = []
         # Generate full deck
-        for i in range(self.cardsets):
+        for i in range(self.getCardsets()):
             self.deck += [
                 Card(suit, number)
                 for
@@ -29,7 +56,7 @@ class Deck(object):
                 for
                     number
                 in
-                    Card.getNumbers()
+                    Card.getNonJokerNumbers()
             ]
             self.deck += [
                 Card(suit, number)
@@ -42,13 +69,72 @@ class Deck(object):
                 in
                     Card.getJokerNumber()
             ]
+        return
 
+    # shuffleDeck
+    #
+    # Randomizes the deck
+    #
+    # args:
+    #   none
+    #
+    # returns:
+    #   nothing
+    #
+    # effects:
+    #   randomizes self.deck
     def shuffleDeck(self):
-        random.shuffle(self.deck)
+        random.shuffle(self.getDeck())
+        return
 
+    # getCardsets
+    #
+    # Accessor for self.cardsets
+    #
+    # args:
+    #   none
+    #
+    # returns:
+    #   self.cardsets
+    def getCardsets(self):
+        return self.cardsets
+
+    # getDeck
+    #
+    # Accessor for self.deck
+    #
+    # args:
+    #   none
+    #
+    # returns:
+    #   self.deck
+    def getDeck(self):
+        return self.deck
+
+    # getSize
+    #
+    # Gets the size of the deck
+    #
+    # args:
+    #   none
+    #
+    # return:
+    #   size of the deck
     def getSize(self):
         return len(self.deck)
 
+    # draw
+    #
+    # Draws a card off of the deck
+    #
+    # args:
+    #   none
+    #
+    # returns:
+    #   top card of the deck
+    #
+    # effects:
+    #   removes top card from the deck
     def draw(self):
         return self.deck.pop()
 

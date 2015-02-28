@@ -15,6 +15,8 @@ class Card(object):
     	'QUEEN': 0x0b,
     	'KING': 0x0c,
     	'ACE': 0x0d,
+    }
+    JOKERNUMBER = {
         'JOKER': 0x0f,
     }
     # Special suits for jokers, and their relative display weights
@@ -219,7 +221,7 @@ class Card(object):
 
     # getNumbers
     #
-    # Accessor for NUMBERS constant
+    # Accessor for NUMBERS and JOKERNUMBER constant
     #
     # args:
     #   none
@@ -228,7 +230,33 @@ class Card(object):
     #   list of valid numbers
     @classmethod
     def getNumbers(cls):
+        return cls.NUMBERS.keys() + cls.JOKERNUMBER.keys()
+
+    # getNonJokerNumbers
+    #
+    # Accessor for NUMBERS constant
+    #
+    # args:
+    #   none
+    #
+    # returns:
+    #   list of valid non joker numbers
+    @classmethod
+    def getNonJokerNumbers(cls):
         return cls.NUMBERS.keys()
+
+    # getJokerNumber
+    #
+    # Accessor for JOKERNUMBER constant
+    #
+    # args:
+    #   none
+    #
+    # returns:
+    #   list of valid joker numbers
+    @classmethod
+    def getJokerNumber(cls):
+        return cls.JOKERNUMBER.keys()
 
     # getJokerSuits
     #
@@ -266,7 +294,7 @@ class Card(object):
     #   weight of the given number
     @classmethod
     def getConstantNumberWeight(cls, number):
-        return cls.NUMBERS[number]
+        return dict(cls.NUMBERS.items() + cls.JOKERNUMBER.items())[number]
 
     # getConstantSuitWeight
     #
