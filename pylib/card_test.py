@@ -63,6 +63,49 @@ class Card_Test(unittest.TestCase):
         self.assertFalse(a >= b)
         self.assertTrue(a < b)
         self.assertTrue(a <= b)
+        b = Card(suit='SPADE', number='TWO', istrumpnumber=True, istrumpsuit=True)
+        self.assertFalse(a > b)
+        self.assertFalse(a >= b)
+        self.assertTrue(a < b)
+        self.assertTrue(a <= b)
+        b = Card(suit='CLUB', number='THREE', istrumpsuit=True)
+        self.assertFalse(a > b)
+        self.assertFalse(a >= b)
+        self.assertTrue(a < b)
+        self.assertTrue(a <= b)
+        a = Card(suit='CLUB', number='FOUR', istrumpsuit=True)
+        self.assertTrue(a > b)
+        self.assertTrue(a >= b)
+        self.assertFalse(a < b)
+        self.assertFalse(a <= b)
+        a = Card(suit='CLUB', number='FIVE', istrumpnumber=True, istrumpsuit=True)
+        self.assertTrue(a > b)
+        self.assertTrue(a >= b)
+        self.assertFalse(a < b)
+        self.assertFalse(a <= b)
+
+    def test_istrumpnumber(self):
+        a = Card(suit='DIAMOND', number='FIVE', istrumpnumber=True, istrumpsuit=True)
+        self.assertTrue(a.isTrumpNumber())
+        a = Card(suit='DIAMOND', number='FIVE')
+        self.assertFalse(a.isTrumpNumber())
+
+    def test_istrumpsuit(self):
+        a = Card(suit='DIAMOND', number='FIVE')
+        self.assertFalse(a.isTrumpSuit())
+        a.setTrumpSuit(istrumpsuit=True)
+        self.assertTrue(a.isTrumpSuit())
+        a = Card(suit='DIAMOND', number='SIX', istrumpsuit=True)
+        self.assertTrue(a.isTrumpSuit())
+        a.setTrumpSuit(istrumpsuit=False)
+        self.assertFalse(a.isTrumpSuit())
+        a = Card(suit='DIAMOND', number='TEN', istrumpnumber=True, istrumpsuit=True)
+        self.assertTrue(a.isTrumpSuit())
+        with self.assertRaises(AssertionError):
+            a.setTrumpSuit(False)
+        with self.assertRaises(AssertionError):
+            Card(suit='DIAMOND', number='FOUR', istrumpnumber=True, istrumpsuit=False)
+
 
 if __name__ == '__main__':
     unittest.main()
