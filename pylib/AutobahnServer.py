@@ -1,20 +1,26 @@
 import sys
+import uuid
 
 from twisted.internet import reactor
 from twisted.python import log
 from twisted.web.server import Site
 from twisted.web.static import File
+from twisted.web.wsgi import WSGIResource
+
+from flask import Flask, render_template
+
 from ffrouter import FindingFriendsRouter
 
 from autobahn.twisted.websocket import WebSocketServerFactory, \
     WebSocketServerProtocol, \
     listenWS
+from autobahn.twisted.resource import WebSocketResource, WSGIRootResource
 
 
-class EchoServerProtocol(WebSocketServerProtocol):
+class FindingFriendsServerProtocol(WebSocketServerProtocol):
 
     def __init__(self, *args):
-        super(EchoServerProtocol, self).__init__(*args)
+        super(FindingFriendsServerProtocol, self).__init__(*args)
         # TODO: Some way to parameterize the router? Not really needed right now.
         self.router = FindingFriendsRouter()
 
@@ -49,18 +55,27 @@ class EchoServerProtocol(WebSocketServerProtocol):
                 'reason': reason
             })
 
+# WSGI app, via flask
+app = Flask(__name__)
+app.secret_key = str(uuid.uuid4())
+
+@app.route('/')
+def page_home():
+    return render_template('testautobahn.html')
+
 if __name__ == '__main__':
 
     log.startLogging(sys.stdout)
 
-    factory = WebSocketServerFactory(u"ws://127.0.0.1:9000")
-    factory.protocol = EchoServerProtocol
-    listenWS(factory)
+    wsFactory = WebSocketServerFactory(u"ws://127.0.0.1:9000")
+    wsFactory.protocol = FindingFriendsServerProtocol
+    wsResource = WebSocketResource(wsFactory)
 
-    webdir = File(".")
-    print(webdir)
-    web = Site(webdir)
-    print(webdir)
-    reactor.listenTCP(8080, web)
+    # WSGI resource for flask
+    wsgiResource = WSGIResource(reactor, reactor.getThreadPool(), app)
 
+    rootResource = WSGIRootResource(wsgiResource, {b'ws': wsResource})
+
+    site = Site(rootResource)
+    reactor.listenTCP(8080, site)
     reactor.run()
