@@ -1,5 +1,6 @@
 from autobahn.twisted import WebSocketServerProtocol
-
+from FlaskConfiguration import login_required
+from flask import *
 
 class FindingFriendsSocketServerProtocol(WebSocketServerProtocol):
 
@@ -18,6 +19,7 @@ class FindingFriendsSocketServerProtocol(WebSocketServerProtocol):
         print("Ws conn open.")
         # self.router.handleAction('Open', {})
 
+    @login_required
     def onMessage(self, payload, isBinary):
         if isBinary:
             print("Bin get: {} bytes".format(len(payload)))
