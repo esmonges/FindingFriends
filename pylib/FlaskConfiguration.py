@@ -1,11 +1,22 @@
-# WSGI app, via flask
+# WSGI app, via flask. Contains all the flask (static) endpoints
 import uuid
 
 from flask import *
+
 from functools import wraps
 
 app = Flask(__name__)
 app.secret_key = str(uuid.uuid4())
+
+
+# Flask socketio test
+@app.route('/socketiotest')
+def socketIOTest():
+    return render_template('SocketIOTest.html')
+
+@app.route('/socketiostresstest')
+def socketIOStressTest():
+    return render_template('StressTestSocketIO.html')
 
 # TODO: Replace this with a real framework method?
 def login_required(f):
@@ -17,6 +28,7 @@ def login_required(f):
             flash('You no log in.')
             return redirect(url_for('login'))
     return wrap
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -30,12 +42,14 @@ def login():
             return redirect(url_for('socket_test'))
     return render_template('login.html', error=error)
 
+
 def check_login(username, password):
     if username == 'admin' and password == 'admin':
         return 1
     else:
         return None
 
+# Autobahn socket test
 @app.route('/socket_test')
 def socket_test():
     return render_template('autobahnflasksockettest.html')
