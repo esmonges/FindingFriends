@@ -8,7 +8,7 @@
 	<script>
 		 $(document).ready(function() {
 		 	namespace = '/test';
-		 	Make 5 connections
+		 	// Make 5 connections
 		 	var sockets = [];
 		 	for (var i = 0; i < 5; i++) {
 		 		sockets[i] = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);

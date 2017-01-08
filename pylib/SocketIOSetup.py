@@ -1,12 +1,13 @@
 # Module for all the socketio endpoints
 
-from FlaskConfiguration import app
-from flask_socketio import SocketIO, emit
-
-# for testing
 import time
 
-socketio = SocketIO(app, )
+from flask import session
+from flask_socketio import SocketIO, emit
+
+from pylib.FlaskAppSetup import app, login_required
+
+socketio = SocketIO(app)
 
 
 # TODO: Other namespaces?? Think chatroom
@@ -17,8 +18,10 @@ def connect():
 
 
 @socketio.on('my_event', namespace='/test')
+@login_required
 def test_message(msg):
     print('got message')
+    print(session)
     print(msg)
     emit('my_response', {'data': msg['data']})
 

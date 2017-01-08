@@ -1,4 +1,4 @@
-from card import Card
+from Card import Card
 import random
 
 class Deck(object):

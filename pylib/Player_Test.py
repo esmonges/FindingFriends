@@ -1,6 +1,6 @@
 import unittest
-from player import Player
-from card import Card
+from Player import Player
+from Card import Card
 
 class Player_Test(unittest.TestCase):
 

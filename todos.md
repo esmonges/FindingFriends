@@ -14,23 +14,32 @@ x Figure out how to identify a user, and manage their session (or if this is eve
 		            x Maybe its fine? Only thing that could have race conditions is flipping for trump suit, but even then
 		            it'll (probably) be fast enough that things can be done serially
         Hokay, so:
-            Next steps: write a flask thing with flask_socketio, and make sure session data can be used in the socket
+            x Next steps: write a flask thing with flask_socketio, and make sure session data can be used in the socket
             handlers and the app handlers
-	Nothing!
+                it can! wooo
 		x Basic login page
 		x Redirect to my socket page
-		Need to start throwing stuff in session
-		How much more does flask-login get me?
-	Basic DB
-		https://www.youtube.com/watch?v=BkdVq9ag7aw
-		Factor out config nicely (see the from_object)
-	Using flask-login
+		x Need to start throwing stuff in session
+	x Next: figure out which login framework to use. Build out users to easily identify players and collect persistent
+	stats. Try to use an object for the login manager so it can be somewhat testable
+	x How much more does flask-login get me?
+	x     actually less, flask security sits on top of flask login
+	x Basic DB
+	x 	https://www.youtube.com/watch?v=BkdVq9ag7aw
+	x 	Factor out config nicely (see the from_object)
+	x Using flask-login
 		Figure out all the flask-login methods. Build a session manager that just stores users in memory. No DB yet. Understand	what all the different states mean and how to modify them (active, authd, anon, etc).
 		Figure out what the ids look like and how they make it into `login_manager.user_loader`
 		Figure out if i can use all the authd mixins on socket operations
-	Using flask-security
+	x Using flask-security
 		Need to setup a DB, since it cares a lot about your ORM (user role permission). Maybe overkill for me? Flask-login might be good enough? Still will eventually need a DB.
 Eventually refactor modules to more consistent naming scheme.
-Maybe get a game started, just build a deck in the game state manager.
+    and refactor config
+        db should be separate
+        security should be separate
+        app should be separate
+        sockets should be separate
+        main should be separate
+Maybe get a game started, just build a deck in the game state manager. Get the dealing routine working
 Get a single user to be able to draw cards from the deck.
 

@@ -1,4 +1,4 @@
-from player import Player
+from Player import Player
 
 class Game(object):
     """Class representing the game. Primarily a collection of players"""
