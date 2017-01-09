@@ -2,34 +2,34 @@ class Card(object):
     """Class representing an individual card"""
     # Numbers and their relative weights
     NUMBERS = {
-    	'TWO': 0x01,
-    	'THREE': 0x02,
-    	'FOUR': 0x03,
-    	'FIVE': 0x04,
-    	'SIX': 0x05,
-    	'SEVEN': 0x06,
-    	'EIGHT': 0x07,
-    	'NINE': 0x08,
-    	'TEN': 0x09,
-    	'JACK': 0x0a,
-    	'QUEEN': 0x0b,
-    	'KING': 0x0c,
-    	'ACE': 0x0d,
+        'TWO': 0x01,
+        'THREE': 0x02,
+        'FOUR': 0x03,
+        'FIVE': 0x04,
+        'SIX': 0x05,
+        'SEVEN': 0x06,
+        'EIGHT': 0x07,
+        'NINE': 0x08,
+        'TEN': 0x09,
+        'JACK': 0x0a,
+        'QUEEN': 0x0b,
+        'KING': 0x0c,
+        'ACE': 0x0d,
     }
     JOKERNUMBER = {
         'JOKER': 0x0f,
     }
     # Special suits for jokers, and their relative display weights
     JOKERSUITS = {
-    	'BIG': 0xf0,
-    	'SMALL': 0xe0,
+        'BIG': 0xf0,
+        'SMALL': 0xe0,
     }
     # Card suits and their relative display weights
     SUITS = {
-    	'CLUB': 0x10,
-    	'SPADE': 0x20,
-    	'HEART': 0x30,
-    	'DIAMOND': 0x40,
+        'CLUB': 0x10,
+        'SPADE': 0x20,
+        'HEART': 0x30,
+        'DIAMOND': 0x40,
     }
     # Special weights for trump number and trump suit
     TRUMPNUMBERWEIGHT = 0x0e
@@ -68,9 +68,9 @@ class Card(object):
         # of the standard suits
         assert number in Card.getNumbers(), 'invalid number'
         if (number == 'JOKER'):
-        	assert suit in Card.getJokerSuits(), 'suit must be in joker suits for jokers'
-        else :
-        	assert suit in Card.getSuits(), 'invalid suit'
+            assert suit in Card.getJokerSuits(), 'suit must be in joker suits for jokers'
+        else:
+            assert suit in Card.getSuits(), 'invalid suit'
 
         # Trump numbers are always trump suits
         if (istrumpnumber):
@@ -83,7 +83,8 @@ class Card(object):
     # __repr__
     # Python representation for the card
     def __repr__(self):
-        return "%s(%r, %r, %r, %r)" % ('Card', self.getSuit(), self.getNumber(), self.isTrumpNumber(), self.isTrumpSuit())
+        return "%s(%r, %r, %r, %r)" % (
+        'Card', self.getSuit(), self.getNumber(), self.isTrumpNumber(), self.isTrumpSuit())
 
     # __cmp__
     # Comparator for the card based on weight. Note that this
@@ -115,7 +116,7 @@ class Card(object):
     # returns:
     #   weight of the card's number
     def getNumberWeight(self):
-        if(self.isTrumpNumber()):
+        if (self.isTrumpNumber()):
             return Card.getTrumpNumberWeight()
         else:
             return Card.getConstantNumberWeight(self.getNumber())
@@ -130,7 +131,7 @@ class Card(object):
     # returns:
     #   weight of the card's suit
     def getSuitWeight(self):
-        if(self.isTrumpSuit()):
+        if (self.isTrumpSuit()):
             return Card.getTrumpSuitWeight()
         else:
             return Card.getConstantSuitWeight(self.getSuit())
@@ -183,7 +184,7 @@ class Card(object):
     #
     # returns:
     #   self.istrumpsuit
-    def isTrumpSuit(self): 
+    def isTrumpSuit(self):
         return self.istrumpsuit
 
     # isInTrumpSuit

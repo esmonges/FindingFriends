@@ -33,13 +33,15 @@ x Figure out how to identify a user, and manage their session (or if this is eve
 		Figure out if i can use all the authd mixins on socket operations
 	x Using flask-security
 		Need to setup a DB, since it cares a lot about your ORM (user role permission). Maybe overkill for me? Flask-login might be good enough? Still will eventually need a DB.
-Eventually refactor modules to more consistent naming scheme.
-    and refactor config
-        db should be separate
-        security should be separate
-        app should be separate
-        sockets should be separate
-        main should be separate
+x Eventually refactor modules to more consistent naming scheme.
+    x and refactor config
+        x db should be separate
+        x security should be separate
+        x app should be separate
+        x sockets should be separate
+        x main should be separate
 Maybe get a game started, just build a deck in the game state manager. Get the dealing routine working
+    probably start with a lobby, get 2 users to register into a game and then kick off the game
+Eventually refactor models into a package
 Get a single user to be able to draw cards from the deck.
 
