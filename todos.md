@@ -49,3 +49,4 @@ Maybe get a game started, just build a deck in the game state manager. Get the d
 Eventually refactor models into a package
 Get a single user to be able to draw cards from the deck.
 
+test ssh
