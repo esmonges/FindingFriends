@@ -42,6 +42,10 @@ x Eventually refactor modules to more consistent naming scheme.
         x main should be separate
 Maybe get a game started, just build a deck in the game state manager. Get the dealing routine working
     probably start with a lobby, get 2 users to register into a game and then kick off the game
+        Gotta factor out some of the socket connection code into real js stuff
+        maybe need static content serving?
+        also make layout.html
+            what is defining the template dir?
 Eventually refactor models into a package
 Get a single user to be able to draw cards from the deck.
 

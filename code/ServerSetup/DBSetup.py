@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy, Model
 from flask_security import UserMixin, RoleMixin
 
-from pylib.ServerSetup.FlaskAppSetup import AppSetup
+from code.ServerSetup.FlaskAppSetup import AppSetup
 
 
 class DBSetup(object):

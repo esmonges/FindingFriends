@@ -1,5 +1,6 @@
 from flask import render_template
-from pylib.ServerSetup.FlaskAppSetup import AppSetup
+from flask_security import login_required
+from code.ServerSetup.FlaskAppSetup import AppSetup
 
 
 class SetupFlaskRoutes(object):
@@ -23,5 +24,10 @@ class SetupFlaskRoutes(object):
             @app.route('/socket_test')
             def socket_test():
                 return render_template('autobahnflasksockettest.html')
+
+            @app.route('/')
+            @login_required
+            def lobby():
+                return render_template('gamelobby.html')
 
             SetupFlaskRoutes.routes_are_set_up = True
