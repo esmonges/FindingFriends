@@ -1,30 +1,30 @@
 import unittest
-from Player import Player
-from Card import Card
+from pylib.Game.Modules.Player import Player
+from pylib.Game.Modules.Card import Card
 
 
 class Player_Test(unittest.TestCase):
     def test_insertCard(self):
         p = Player('Teddy', [])
         a = Card(suit='DIAMOND', number='FIVE')
-        p.insertCard(a)
+        p.addCardToHand(a)
         self.assertTrue(p.getHand() == [a])
         # Yeah, this is a little error-prone, since it's the
         # same object. But this is just for testing purposes.
         # Probably best to avoid this in real code
-        p.insertCard(a)
+        p.addCardToHand(a)
         self.assertTrue(p.getHand() == [a, a])
 
         b = Card(suit='CLUB', number='TWO')
-        p.insertCard(b)
+        p.addCardToHand(b)
         c = Card(suit='CLUB', number='THREE')
-        p.insertCard(c)
+        p.addCardToHand(c)
         self.assertTrue(p.getHand() == [b, c, a, a])
 
         d = Card(suit='HEART', number='SIX', istrumpnumber=True, istrumpsuit=True)
-        p.insertCard(d)
+        p.addCardToHand(d)
         e = Card(suit='HEART', number='FIVE', istrumpsuit=True)
-        p.insertCard(e)
+        p.addCardToHand(e)
         self.assertTrue(p.getHand() == [b, c, a, a, e, d])
         # Mix it up to keep us on our toes
         self.assertFalse(p.getHand() == [a, a, b, c, d, e])
@@ -32,9 +32,9 @@ class Player_Test(unittest.TestCase):
         # Switched the order to stess test things. Totally
         # not because I screwed up earlier...
         f = Card(number='JOKER', suit='SMALL')
-        p.insertCard(f)
+        p.addCardToHand(f)
         g = Card(number='JOKER', suit='BIG')
-        p.insertCard(g)
+        p.addCardToHand(g)
         self.assertTrue(p.getHand() == [b, c, a, a, e, d, f, g])
 
 

@@ -1,35 +1,62 @@
 class Card(object):
+    # Suits
+    CLUB = 'CLUB'
+    SPADE = 'SPADE'
+    HEART = 'HEART'
+    DIAMOND = 'DIAMOND'
+    BIG = 'BIG'
+    SMALL = 'SMALL'
+    CARDSUITS = [CLUB, SPADE, HEART, DIAMOND]
+    JOKERSUITS = [BIG, SMALL]
+
+    # Numbers
+    TWO = 'TWO'
+    THREE = 'THREE'
+    FOUR = 'FOUR'
+    FIVE = 'FIVE'
+    SIX = 'SIX'
+    SEVEN = 'SEVEN'
+    EIGHT = 'EIGHT'
+    NINE = 'NINE'
+    TEN = 'TEN'
+    JACK = 'JACK'
+    QUEEN = 'QUEEN'
+    KING = 'KING'
+    ACE = 'ACE'
+    JOKER = 'JOKER'
+    NUMBERS = [TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE, JOKER]
+
     """Class representing an individual card"""
     # Numbers and their relative weights
-    NUMBERS = {
-        'TWO': 0x01,
-        'THREE': 0x02,
-        'FOUR': 0x03,
-        'FIVE': 0x04,
-        'SIX': 0x05,
-        'SEVEN': 0x06,
-        'EIGHT': 0x07,
-        'NINE': 0x08,
-        'TEN': 0x09,
-        'JACK': 0x0a,
-        'QUEEN': 0x0b,
-        'KING': 0x0c,
-        'ACE': 0x0d,
+    NUMBERWEIGHTS = {
+        TWO: 0x01,
+        THREE: 0x02,
+        FOUR: 0x03,
+        FIVE: 0x04,
+        SIX: 0x05,
+        SEVEN: 0x06,
+        EIGHT: 0x07,
+        NINE: 0x08,
+        TEN: 0x09,
+        JACK: 0x0a,
+        QUEEN: 0x0b,
+        KING: 0x0c,
+        ACE: 0x0d,
     }
-    JOKERNUMBER = {
-        'JOKER': 0x0f,
+    JOKERNUMBERWEIGHT = {
+        JOKER: 0x0f,
     }
     # Special suits for jokers, and their relative display weights
-    JOKERSUITS = {
-        'BIG': 0xf0,
-        'SMALL': 0xe0,
+    JOKERSUITWEIGHTS = {
+        BIG: 0xf0,
+        SMALL: 0xe0,
     }
     # Card suits and their relative display weights
-    SUITS = {
-        'CLUB': 0x10,
-        'SPADE': 0x20,
-        'HEART': 0x30,
-        'DIAMOND': 0x40,
+    SUITWEIGHTS = {
+        CLUB: 0x10,
+        SPADE: 0x20,
+        HEART: 0x30,
+        DIAMOND: 0x40,
     }
     # Special weights for trump number and trump suit
     TRUMPNUMBERWEIGHT = 0x0e
@@ -67,7 +94,7 @@ class Card(object):
         # it should be BIG or SMALL instead of one
         # of the standard suits
         assert number in Card.getNumbers(), 'invalid number'
-        if (number == 'JOKER'):
+        if (number == self.JOKER):
             assert suit in Card.getJokerSuits(), 'suit must be in joker suits for jokers'
         else:
             assert suit in Card.getSuits(), 'invalid suit'
@@ -200,7 +227,7 @@ class Card(object):
     # returns:
     #   True if the card is in the trump suit, False otherwise
     def isInTrumpSuit(self):
-        return (self.isTrumpSuit() or self.getNumber() == 'JOKER')
+        return (self.isTrumpSuit() or self.getNumber() == self.JOKER)
 
     # setTrumpSuit
     #
@@ -231,7 +258,7 @@ class Card(object):
     #   list of valid numbers
     @classmethod
     def getNumbers(cls):
-        return cls.NUMBERS.keys() + cls.JOKERNUMBER.keys()
+        return cls.NUMBERWEIGHTS.keys() + cls.JOKERNUMBERWEIGHT.keys()
 
     # getNonJokerNumbers
     #
@@ -244,7 +271,7 @@ class Card(object):
     #   list of valid non joker numbers
     @classmethod
     def getNonJokerNumbers(cls):
-        return cls.NUMBERS.keys()
+        return cls.NUMBERWEIGHTS.keys()
 
     # getJokerNumber
     #
@@ -257,7 +284,7 @@ class Card(object):
     #   list of valid joker numbers
     @classmethod
     def getJokerNumber(cls):
-        return cls.JOKERNUMBER.keys()
+        return cls.JOKERNUMBERWEIGHT.keys()
 
     # getJokerSuits
     #
@@ -270,7 +297,7 @@ class Card(object):
     #   list of valid joker suits
     @classmethod
     def getJokerSuits(cls):
-        return cls.JOKERSUITS.keys()
+        return cls.JOKERSUITWEIGHTS.keys()
 
     # getSuits
     #
@@ -282,7 +309,7 @@ class Card(object):
     #   list of valid suits
     @classmethod
     def getSuits(cls):
-        return cls.SUITS.keys()
+        return cls.SUITWEIGHTS.keys()
 
     # getConstantNumberWeight
     #
@@ -295,7 +322,7 @@ class Card(object):
     #   weight of the given number
     @classmethod
     def getConstantNumberWeight(cls, number):
-        return dict(cls.NUMBERS.items() + cls.JOKERNUMBER.items())[number]
+        return dict(cls.NUMBERWEIGHTS.items() + cls.JOKERNUMBERWEIGHT.items())[number]
 
     # getConstantSuitWeight
     #
@@ -308,7 +335,7 @@ class Card(object):
     #   weight of the given suit
     @classmethod
     def getConstantSuitWeight(cls, suit):
-        return dict(cls.SUITS.items() + cls.JOKERSUITS.items())[suit]
+        return dict(cls.SUITWEIGHTS.items() + cls.JOKERSUITWEIGHTS.items())[suit]
 
     # getTrumpSuitWeight
     #

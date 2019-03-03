@@ -3,6 +3,9 @@ from Card import Card
 
 class Player(object):
     """class representing a Player in the game"""
+    hand = False  # type: List[Card]
+
+
     # Player - constructor
     #
     # A player has a name and a hand of cards. Constructs the player object
@@ -14,10 +17,15 @@ class Player(object):
     #
     # returns:
     #   Player object
-    def __init__(self, name, hand=[]):
+    def __init__(self, name="", hand=False):
         super(Player, self).__init__()
         self.name = name
+        if not hand:
+            hand = [] # Do this to get around default param being a ref; maybe this is me just not understanding python
         hand.sort()
+        self.hand = hand
+
+    def sethand(self, hand=[]):
         self.hand = hand
 
     # __repr__
@@ -29,6 +37,17 @@ class Player(object):
     # String representing the player
     def __str__(self):
         return "%r %r" % (self.name, str(self.hand))
+
+    def __eq__(self, other):
+        """
+
+        :type other: Player
+        """
+        return self.getIdentifier() == other.getIdentifier()
+
+    def getIdentifier(self):
+        # TODO: Better way to ID players than just name?
+        return self.name
 
     # insertCard
     #
@@ -42,7 +61,7 @@ class Player(object):
     #
     # effects:
     #   inserts card into self.hand in a sorted manner
-    def insertCard(self, card):
+    def addCardToHand(self, card):
         assert type(card) is Card, 'card must be a Card'
         bisect.insort(self.hand, card);
         return

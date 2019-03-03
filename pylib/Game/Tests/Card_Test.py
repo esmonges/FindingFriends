@@ -1,5 +1,5 @@
 import unittest
-from Card import Card
+from pylib.Game.Modules.Card import Card
 
 class Card_Test(unittest.TestCase):
     def setUp(self):
@@ -11,7 +11,7 @@ class Card_Test(unittest.TestCase):
         for suit in self.suits:
             for number in self.numbers:
                 # Special case for jokers
-                if (number == 'JOKER'):
+                if (number == Card.JOKER):
                     with self.assertRaises(AssertionError):
                         Card(suit=suit, number=number)
                 else:
@@ -19,15 +19,15 @@ class Card_Test(unittest.TestCase):
 
     def test_jokerSuits(self):
         for suit in self.jokersuits:
-            Card(suit=suit, number='JOKER')
+            Card(suit=suit, number=Card.JOKER)
 
     def test_badSuit(self):
         with self.assertRaises(AssertionError):
-            Card(suit='LOLNO', number='ACE')
+            Card(suit='LOLNO', number=Card.ACE)
 
     def test_badNumber(self):
         with self.assertRaises(AssertionError):
-            Card(suit='SPADE', number='TREEFIDDY')
+            Card(suit=Card.SPADE, number='TREEFIDDY')
 
     def test_eq(self):
         for suit1 in self.suits:
@@ -36,8 +36,8 @@ class Card_Test(unittest.TestCase):
                 for number1 in self.numbers:
                     for number2 in self.numbers:
                         if (
-                            (number1 == 'JOKER' and suit1 not in self.jokersuits)
-                            or (number2 == 'JOKER' and suit2 not in self.jokersuits)
+                            (number1 == Card.JOKER and suit1 not in self.jokersuits)
+                            or (number2 == Card.JOKER and suit2 not in self.jokersuits)
                         ):
                             continue
                         numbersequal = (number1 == number2)
@@ -106,7 +106,4 @@ class Card_Test(unittest.TestCase):
         with self.assertRaises(AssertionError):
             Card(suit='DIAMOND', number='FOUR', istrumpnumber=True, istrumpsuit=False)
 
-
-if __name__ == '__main__':
-    unittest.main()
 

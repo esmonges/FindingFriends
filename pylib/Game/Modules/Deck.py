@@ -1,8 +1,13 @@
 from Card import Card
+from Randomizer import Randomizer
 import random
 
 class Deck(object):
     """Object representing a deck that can contain any multiple of 54 cards"""
+    deck = False  # type: List[Card]
+    cardsets = 0
+    randomizer = False
+
     # Deck - Constructor
     #
     # Constructs a deck with a given number of cardsets. For each cardset, an
@@ -13,12 +18,13 @@ class Deck(object):
     #
     # returns:
     #   Deck object
-    def __init__(self, cardsets):
+    def __init__(self, cardsets, randomizer=False):
         super(Deck, self).__init__()
+        if not randomizer:
+            randomizer = Randomizer()
         assert (cardsets >= 1)
         self.cardsets = cardsets
-        self.generateDeck()
-        self.shuffleDeck()
+        self.randomizer = randomizer
 
     # __repr__
     # Python representation for this deck
@@ -84,7 +90,7 @@ class Deck(object):
     # effects:
     #   randomizes self.deck
     def shuffleDeck(self):
-        random.shuffle(self.getDeck())
+        self.deck = self.randomizer.shuffle(self.deck)
         return
 
     # getCardsets
@@ -122,6 +128,10 @@ class Deck(object):
     #   size of the deck
     def getSize(self):
         return len(self.deck)
+
+    def isEmpty(self):
+        # type: () -> bool
+        return self.getSize() == 0
 
     # draw
     #
