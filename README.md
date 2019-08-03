@@ -19,6 +19,8 @@ simultaneous communication between all the players and the server orchestrating 
 DB interaction will be via SQLAlchemy (using sqlite).
 
 # Notes/non-obvious things
+This is a perpetual WIP and may never work on its own. I'll update as I go.
+
 Credentials for the email account `ffbridgeserver@gmail.com` need to be stored
 locally for the app to send account verification emails through flask's framework.
 If you want to fork this you'll need to add your own email and credentials, or
