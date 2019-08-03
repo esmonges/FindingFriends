@@ -118,7 +118,14 @@ class Card(object):
     # is only for display logic use, and will not dictate
     # the relative strength of cards in the game
     def __cmp__(self, other):
+        # TODO: Kill this off and use __lt__ and __eq__
         return self.getTotalWeight() - other.getTotalWeight()
+
+    def __lt__(self, other: object):
+        return self.getTotalWeight() - other.getTotalWeight() < 0
+
+    def __eq__(self, other: object):
+        return self.suit == other.suit
 
     # GetTotalWeight
     #
@@ -258,7 +265,7 @@ class Card(object):
     #   list of valid numbers
     @classmethod
     def getNumbers(cls):
-        return cls.NUMBERWEIGHTS.keys() + cls.JOKERNUMBERWEIGHT.keys()
+        return list(cls.NUMBERWEIGHTS.keys()) + list(cls.JOKERNUMBERWEIGHT.keys())
 
     # getNonJokerNumbers
     #
