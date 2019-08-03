@@ -146,6 +146,6 @@ class Game_Test(unittest.TestCase):
             .playFirstHand()
 
         # TODO: assert some stuff
-        assert 1 == 1
+        assert 1 == 0
 
     # Have people start playing
