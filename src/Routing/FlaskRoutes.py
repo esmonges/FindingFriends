@@ -1,6 +1,6 @@
 from flask import render_template
 from flask_security import login_required
-from code.ServerSetup.FlaskAppSetup import AppSetup
+from src.ServerSetup.FlaskAppSetup import AppSetup
 
 
 class SetupFlaskRoutes(object):

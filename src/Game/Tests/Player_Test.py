@@ -1,6 +1,6 @@
 import unittest
-from pylib.Game.Modules.Player import Player
-from pylib.Game.Modules.Card import Card
+from src.Game.Modules.Player import Player
+from src.Game.Modules.Card import Card
 
 
 class Player_Test(unittest.TestCase):
@@ -11,7 +11,7 @@ class Player_Test(unittest.TestCase):
         self.assertTrue(p.getHand() == [a])
         # Yeah, this is a little error-prone, since it's the
         # same object. But this is just for testing purposes.
-        # Probably best to avoid this in real code
+        # Probably best to avoid this in real src
         p.addCardToHand(a)
         self.assertTrue(p.getHand() == [a, a])
 

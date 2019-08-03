@@ -1,7 +1,7 @@
 from flask_security import Security, SQLAlchemyUserDatastore
 
-from code.ServerSetup.DBSetup import User, Role, DBSetup
-from code.ServerSetup.FlaskAppSetup import AppSetup
+from src.ServerSetup.DBSetup import User, Role, DBSetup
+from src.ServerSetup.FlaskAppSetup import AppSetup
 
 
 class FlaskSecuritySetup(object):

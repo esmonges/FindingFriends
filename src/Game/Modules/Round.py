@@ -1,4 +1,7 @@
-from code.Game.Modules import Randomizer, Player, Card, Deck
+from src.Game.Modules.Card import Card
+from src.Game.Modules.Deck import Deck
+from src.Game.Modules.Player import Player
+from src.Game.Modules.Randomizer import Randomizer
 from math import ceil
 
 
@@ -31,7 +34,7 @@ class Round(object):
         if not randomizer:
             randomizer = Randomizer()
         if not trumpNumber:
-            trumpNumber = Card.NUMBERS[0]
+            trumpNumber = Card.NUMBERS
 
         self.players = players
         self.randomizer = randomizer

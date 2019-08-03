@@ -1,9 +1,9 @@
 # Script to run the flask/socketio app
-from code.ServerSetup.FlaskAppSetup import AppSetup
-from code.ServerSetup.SocketIOSetup import SocketIOSetup
-from code.Routing.FlaskRoutes import SetupFlaskRoutes
-from code.ServerSetup.DBSetup import DBSetup
-from code.ServerSetup.FlaskSecuritySetup import FlaskSecuritySetup
+from src.ServerSetup.FlaskAppSetup import AppSetup
+from src.ServerSetup.SocketIOSetup import SocketIOSetup
+from src.Routing.FlaskRoutes import SetupFlaskRoutes
+from src.ServerSetup.DBSetup import DBSetup
+from src.ServerSetup.FlaskSecuritySetup import FlaskSecuritySetup
 
 if __name__ == '__main__':
     app = AppSetup.get_app()

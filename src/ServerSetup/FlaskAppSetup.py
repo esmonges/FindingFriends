@@ -4,8 +4,8 @@ import uuid
 from flask import *
 from flask_mail import Mail
 
-from code.Instance import Secrets
-from code.Config import DatabaseConfiguration, FlaskSecurityConfiguration, MailConfiguration
+from src.Instance import Secrets
+from src.Config import DatabaseConfiguration, FlaskSecurityConfiguration, MailConfiguration
 
 
 class AppSetup(object):

@@ -1,6 +1,6 @@
-from code.Game.Modules.Round import Round
-from code.Game.Modules.Randomizer import Randomizer
-from code.Game.Modules.Player import Player
+from src.Game.Modules.Round import Round
+from src.Game.Modules.Randomizer import Randomizer
+from src.Game.Modules.Player import Player
 
 class Game(object):
     """Class representing the game. Primarily a collection of players"""

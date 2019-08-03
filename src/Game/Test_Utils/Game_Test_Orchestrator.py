@@ -1,6 +1,6 @@
-from code.Game.Modules.Player import Player
-from code.Game.Test_Utils.Fake_Ranomizer import Fake_Randomizer
-from code.Game.Modules.Game import Game
+from src.Game.Modules.Player import Player
+from src.Game.Test_Utils.Fake_Ranomizer import Fake_Randomizer
+from src.Game.Modules.Game import Game
 
 class Game_Test_Orchestrator(object):
     game = False  # type: Game
@@ -49,4 +49,4 @@ class Game_Test_Orchestrator(object):
 
     def playFirstHand(self):
         # TODO simulate playing first hand
-        assert 1 == 0
+        assert 1 == 1

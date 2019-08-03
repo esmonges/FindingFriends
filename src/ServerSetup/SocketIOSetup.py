@@ -1,7 +1,7 @@
 # Module for all the socketio endpoints
 from flask_socketio import SocketIO
 
-from code.ServerSetup.FlaskAppSetup import AppSetup
+from src.ServerSetup.FlaskAppSetup import AppSetup
 
 
 class SocketIOSetup(object):

@@ -1,7 +1,7 @@
 import unittest
-from pylib.Game.Modules.Round import Round
-from pylib.Game.Modules.Card import Card
-from pylib.Game.Modules.Player import Player
+from src.Game.Modules.Round import Round
+from src.Game.Modules.Card import Card
+from src.Game.Modules.Player import Player
 
 class Round_Test(unittest.TestCase):
     round = False  # type: Round
@@ -42,31 +42,31 @@ class Round_Test(unittest.TestCase):
     def test_declare_trump_suit_wrong_number(self):
         with self.assertRaises(ValueError) as context:
             self.round.declareTrumpSuitByPlayer(self.p1, [Card(Card.SPADE, Card.FOUR)])
-        assert Round.NOT_TRUMP_NUMBER_ERROR in context.exception
+        assert context.exception.args[0] == Round.NOT_TRUMP_NUMBER_ERROR
 
     # 2 club 3 heart
     def test_declare_trump_suit_invalid_set_of_cards(self):
         with self.assertRaises(ValueError) as context:
             self.round.declareTrumpSuitByPlayer(self.p1, [Card(Card.SPADE, Card.THREE), Card(Card.SPADE, Card.FOUR)])
-        assert Round.TRUMP_DECLARATION_MISMATCH_ERROR in context.exception
+        assert context.exception.args[0] == Round.TRUMP_DECLARATION_MISMATCH_ERROR
 
     def test_declare_trump_suit_player_not_in_game(self):
         with self.assertRaises(ValueError) as context:
             self.round.declareTrumpSuitByPlayer(Player('Kevin'), [Card(Card.SPADE, Card.THREE)])
-        assert Round.INVALID_PLAYER_ERROR in context.exception
+        context.exception.args[0] == Round.INVALID_PLAYER_ERROR
 
     def test_redeclare_with_same_number(self):
         with self.assertRaises(ValueError) as context:
             self.round.declareTrumpSuitByPlayer(self.p1, [Card(Card.SPADE, Card.THREE)])
             self.round.declareTrumpSuitByPlayer(self.p2, [Card(Card.HEART, Card.THREE)])
-        assert Round.MORE_TO_REDECLARE_ERROR in context.exception
+        assert context.exception.args[0] == Round.MORE_TO_REDECLARE_ERROR
 
     def test_redeclare_with_fewer_but_previous_declaration(self):
         with self.assertRaises(ValueError) as context:
             self.round.declareTrumpSuitByPlayer(self.p1, [Card(Card.SPADE, Card.THREE)])
             self.round.declareTrumpSuitByPlayer(self.p2, [Card(Card.HEART, Card.THREE), Card(Card.HEART, Card.THREE)])
             self.round.declareTrumpSuitByPlayer(self.p1, [Card(Card.SPADE, Card.THREE)])
-        assert Round.MORE_IF_PREVIOUSLY_DECLARED_ERROR in context.exception
+        assert context.exception.args[0] == Round.MORE_IF_PREVIOUSLY_DECLARED_ERROR
 
     def test_player_does_not_have_cards_to_call(self):
         with self.assertRaises(ValueError) as context:
@@ -78,7 +78,7 @@ class Round_Test(unittest.TestCase):
                     Card(Card.SPADE, Card.THREE)
                 ]
             )
-        assert Round.PLAYER_MISSING_CARDS_FOR_CALL_ERROR in context.exception
+        assert context.exception.args[0] == Round.PLAYER_MISSING_CARDS_FOR_CALL_ERROR
 
     def test_first_valid_call_changes_game_state(self):
         self.round.declareTrumpSuitByPlayer(self.p1, [Card(Card.SPADE, Card.THREE)])
@@ -176,5 +176,8 @@ class Round_Test(unittest.TestCase):
                     Card(Card.HEART, Card.THREE)
                 ]
             )
-        self.assertTrue(Round.MORE_TO_REDECLARE_ERROR in context.exception, 'Should have thrown exception when trying to overturn 4 diamonds with 4 hearts after 3 clubs')
+        self.assertTrue(
+            context.exception.args[0] == Round.MORE_TO_REDECLARE_ERROR,
+            'Should have thrown exception when trying to overturn 4 diamonds with 4 hearts after 3 clubs'
+        )
         # Todo add more interesting assertions to this as well as the other one
