@@ -1,5 +1,5 @@
-from Card import Card
-from Randomizer import Randomizer
+from code.Game.Modules.Card import Card
+from code.Game.Modules.Randomizer import Randomizer
 import random
 
 class Deck(object):
