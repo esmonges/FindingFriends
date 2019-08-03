@@ -117,15 +117,19 @@ class Card(object):
     # Comparator for the card based on weight. Note that this
     # is only for display logic use, and will not dictate
     # the relative strength of cards in the game
-    def __cmp__(self, other):
-        # TODO: Kill this off and use __lt__ and __eq__
-        return self.getTotalWeight() - other.getTotalWeight()
+    # def __cmp__(self, other):
+    #     # TODO: Kill this off and use __lt__ and __eq__
+    #     return self.getTotalWeight() - other.getTotalWeight()
 
+    # TODO: some way to make type annotation `CARD` instead of `object`?
     def __lt__(self, other: object):
         return self.getTotalWeight() - other.getTotalWeight() < 0
 
+    def __le__(self, other: object):
+        return self.getTotalWeight() - other.getTotalWeight() <= 0
+
     def __eq__(self, other: object):
-        return self.suit == other.suit
+        return self.suit == other.suit and self.getTotalWeight() == other.getTotalWeight()
 
     # GetTotalWeight
     #
@@ -329,7 +333,9 @@ class Card(object):
     #   weight of the given number
     @classmethod
     def getConstantNumberWeight(cls, number):
-        return dict(cls.NUMBERWEIGHTS.items() + cls.JOKERNUMBERWEIGHT.items())[number]
+        if (number == cls.JOKER):
+            return cls.JOKERNUMBERWEIGHT[number]
+        return cls.NUMBERWEIGHTS[number]
 
     # getConstantSuitWeight
     #
@@ -342,7 +348,9 @@ class Card(object):
     #   weight of the given suit
     @classmethod
     def getConstantSuitWeight(cls, suit):
-        return dict(cls.SUITWEIGHTS.items() + cls.JOKERSUITWEIGHTS.items())[suit]
+        if (suit in cls.JOKERSUITS):
+            return cls.JOKERSUITWEIGHTS[suit]
+        return cls.SUITWEIGHTS[suit]
 
     # getTrumpSuitWeight
     #

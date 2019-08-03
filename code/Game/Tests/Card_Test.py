@@ -49,10 +49,10 @@ class Card_Test(unittest.TestCase):
     def test_lt(self):
         a = Card(suit='DIAMOND', number='ACE')
         b = Card(suit='DIAMOND', number='TEN')
-        self.assertTrue(a > b)
-        self.assertTrue(a >= b)
         self.assertFalse(a < b)
         self.assertFalse(a <= b)
+        self.assertTrue(a > b)
+        self.assertTrue(a >= b)
         b = Card(suit='DIAMOND', number='ACE')
         self.assertFalse(a > b)
         self.assertTrue(a >= b)
