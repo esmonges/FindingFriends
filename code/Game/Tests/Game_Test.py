@@ -1,8 +1,8 @@
 import unittest
-from pylib.Game.Modules.Randomizer import Randomizer
-from pylib.Game.Modules.Card import Card
-from pylib.Game.Test_Utils.Game_Test_Orchestrator import Game_Test_Orchestrator
-from pylib.Game.Test_Utils.Fake_Ranomizer import Fake_Randomizer
+from code.Game.Modules.Randomizer import Randomizer
+from code.Game.Modules.Card import Card
+from code.Game.Test_Utils.Game_Test_Orchestrator import Game_Test_Orchestrator
+from code.Game.Test_Utils.Fake_Ranomizer import Fake_Randomizer
 
 
 class Game_Test(unittest.TestCase):

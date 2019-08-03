@@ -1,8 +1,5 @@
-from Randomizer import Randomizer
-from Deck import Deck
+from code.Game.Modules import Randomizer, Player, Card, Deck
 from math import ceil
-from Card import Card
-from Player import Player
 
 
 class Round(object):

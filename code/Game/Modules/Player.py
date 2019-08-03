@@ -1,5 +1,5 @@
 import bisect
-from Card import Card
+from code.Game.Modules import Card
 
 class Player(object):
     """class representing a Player in the game"""

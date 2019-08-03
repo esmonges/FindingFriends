@@ -1,4 +1,4 @@
-from pylib.Game.Modules.Randomizer import Randomizer
+from code.Game.Modules.Randomizer import Randomizer
 
 class Fake_Randomizer(Randomizer):
     def __init__(self):

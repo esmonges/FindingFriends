@@ -1,6 +1,6 @@
-from pylib.Game.Modules.Player import Player
-from Fake_Ranomizer import Fake_Randomizer
-from pylib.Game.Modules.Game import Game
+from code.Game.Modules.Player import Player
+from code.Game.Test_Utils.Fake_Ranomizer import Fake_Randomizer
+from code.Game.Modules.Game import Game
 
 class Game_Test_Orchestrator(object):
     game = False  # type: Game

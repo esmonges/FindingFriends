@@ -1,6 +1,4 @@
-from code.Game.Modules.Card import Card
-from code.Game.Modules.Randomizer import Randomizer
-import random
+from code.Game.Modules import Card, Randomizer
 
 class Deck(object):
     """Object representing a deck that can contain any multiple of 54 cards"""
