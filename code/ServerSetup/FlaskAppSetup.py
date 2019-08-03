@@ -4,8 +4,8 @@ import uuid
 from flask import *
 from flask_mail import Mail
 
-from pylib.Instance import Secrets
-from pylib.Config import DatabaseConfiguration, FlaskSecurityConfiguration, MailConfiguration
+from code.Instance import Secrets
+from code.Config import DatabaseConfiguration, FlaskSecurityConfiguration, MailConfiguration
 
 
 class AppSetup(object):
@@ -14,7 +14,7 @@ class AppSetup(object):
     @staticmethod
     def get_app():
         # Object cache the app so we don't reinit it
-        if (AppSetup.app is not None):
+        if AppSetup.app is not None:
             return AppSetup.app
 
         AppSetup.app = Flask(__name__)

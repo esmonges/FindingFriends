@@ -3,7 +3,7 @@ import time
 from flask_socketio import emit
 from flask import session
 
-from pylib.ServerSetup.SocketIOSetup import SocketIOSetup
+from code.ServerSetup.SocketIOSetup import SocketIOSetup
 
 
 class SocketIORoutes(object):

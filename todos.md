@@ -50,3 +50,11 @@
             - and then assert that anyone jumped (since they should have)
 - https://github.com/hzoo/shengji - this is a frontend I could likely steal!!!
 - https://www.heroku.com/ - try to host this somehow??
+        Gotta factor out some of the socket connection code into real js stuff
+        maybe need static content serving?
+        also make layout.html
+            what is defining the template dir?
+Eventually refactor models into a package
+Get a single user to be able to draw cards from the deck.
+
+test ssh
