@@ -1,17 +1,18 @@
 import unittest
 from src.Game.Modules.Card import Card
+from src.Game.Modules import CardConstants
 
 class Card_Test(unittest.TestCase):
     def setUp(self):
-        self.numbers = Card.getNumbers()
-        self.suits = Card.getSuits()
-        self.jokersuits = Card.getJokerSuits()
+        self.numbers = CardConstants.NUMBERS
+        self.suits = CardConstants.CARDSUITS
+        self.jokersuits = CardConstants.JOKERSUITS
 
     def test_allSuits(self):
         for suit in self.suits:
             for number in self.numbers:
                 # Special case for jokers
-                if (number == Card.JOKER):
+                if (number == CardConstants.JOKER):
                     with self.assertRaises(AssertionError):
                         Card(suit=suit, number=number)
                 else:
@@ -19,15 +20,15 @@ class Card_Test(unittest.TestCase):
 
     def test_jokerSuits(self):
         for suit in self.jokersuits:
-            Card(suit=suit, number=Card.JOKER)
+            Card(suit=suit, number=CardConstants.JOKER)
 
     def test_badSuit(self):
         with self.assertRaises(AssertionError):
-            Card(suit='LOLNO', number=Card.ACE)
+            Card(suit='LOLNO', number=CardConstants.ACE)
 
     def test_badNumber(self):
         with self.assertRaises(AssertionError):
-            Card(suit=Card.SPADE, number='TREEFIDDY')
+            Card(suit=CardConstants.SPADE, number='TREEFIDDY')
 
     def test_eq(self):
         for suit1 in self.suits:
@@ -36,8 +37,8 @@ class Card_Test(unittest.TestCase):
                 for number1 in self.numbers:
                     for number2 in self.numbers:
                         if (
-                            (number1 == Card.JOKER and suit1 not in self.jokersuits)
-                            or (number2 == Card.JOKER and suit2 not in self.jokersuits)
+                            (number1 == CardConstants.JOKER and suit1 not in self.jokersuits)
+                            or (number2 == CardConstants.JOKER and suit2 not in self.jokersuits)
                         ):
                             continue
                         numbersequal = (number1 == number2)

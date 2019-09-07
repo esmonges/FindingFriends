@@ -1,66 +1,9 @@
+from src.Game.Modules import CardConstants
+
+JOKER = 'notajoker'
+
 class Card(object):
-    # Suits
-    CLUB = 'CLUB'
-    SPADE = 'SPADE'
-    HEART = 'HEART'
-    DIAMOND = 'DIAMOND'
-    BIG = 'BIG'
-    SMALL = 'SMALL'
-    CARDSUITS = [CLUB, SPADE, HEART, DIAMOND]
-    JOKERSUITS = [BIG, SMALL]
-
-    # Numbers
-    TWO = 'TWO'
-    THREE = 'THREE'
-    FOUR = 'FOUR'
-    FIVE = 'FIVE'
-    SIX = 'SIX'
-    SEVEN = 'SEVEN'
-    EIGHT = 'EIGHT'
-    NINE = 'NINE'
-    TEN = 'TEN'
-    JACK = 'JACK'
-    QUEEN = 'QUEEN'
-    KING = 'KING'
-    ACE = 'ACE'
-    JOKER = 'JOKER'
-    NUMBERS = [TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE, JOKER]
-
-    """Class representing an individual card"""
-    # Numbers and their relative weights
-    NUMBERWEIGHTS = {
-        TWO: 0x01,
-        THREE: 0x02,
-        FOUR: 0x03,
-        FIVE: 0x04,
-        SIX: 0x05,
-        SEVEN: 0x06,
-        EIGHT: 0x07,
-        NINE: 0x08,
-        TEN: 0x09,
-        JACK: 0x0a,
-        QUEEN: 0x0b,
-        KING: 0x0c,
-        ACE: 0x0d,
-    }
-    JOKERNUMBERWEIGHT = {
-        JOKER: 0x0f,
-    }
-    # Special suits for jokers, and their relative display weights
-    JOKERSUITWEIGHTS = {
-        BIG: 0xf0,
-        SMALL: 0xe0,
-    }
-    # Card suits and their relative display weights
-    SUITWEIGHTS = {
-        CLUB: 0x10,
-        SPADE: 0x20,
-        HEART: 0x30,
-        DIAMOND: 0x40,
-    }
-    # Special weights for trump number and trump suit
-    TRUMPNUMBERWEIGHT = 0x0e
-    TRUMPSUITWEIGHT = 0x50
+    JOKER = 'Joker'
 
     # Card - Constructor
     #
@@ -93,11 +36,11 @@ class Card(object):
         # one of the standard suits. If it is a joker,
         # it should be BIG or SMALL instead of one
         # of the standard suits
-        assert number in Card.getNumbers(), 'invalid number'
-        if (number == self.JOKER):
-            assert suit in Card.getJokerSuits(), 'suit must be in joker suits for jokers'
+        assert number in CardConstants.NUMBERS, 'invalid number'
+        if (number == CardConstants.JOKER):
+            assert suit in CardConstants.JOKERSUITS, 'suit must be in joker suits for jokers'
         else:
-            assert suit in Card.getSuits(), 'invalid suit'
+            assert suit in CardConstants.CARDSUITS, 'invalid suit'
 
         # Trump numbers are always trump suits
         if (istrumpnumber):
@@ -155,7 +98,7 @@ class Card(object):
     #   weight of the card's number
     def getNumberWeight(self):
         if (self.isTrumpNumber()):
-            return Card.getTrumpNumberWeight()
+            return CardConstants.TRUMPNUMBERWEIGHT
         else:
             return Card.getConstantNumberWeight(self.getNumber())
 
@@ -170,7 +113,7 @@ class Card(object):
     #   weight of the card's suit
     def getSuitWeight(self):
         if (self.isTrumpSuit()):
-            return Card.getTrumpSuitWeight()
+            return CardConstants.TRUMPSUITWEIGHT
         else:
             return Card.getConstantSuitWeight(self.getSuit())
 
@@ -238,7 +181,7 @@ class Card(object):
     # returns:
     #   True if the card is in the trump suit, False otherwise
     def isInTrumpSuit(self):
-        return (self.isTrumpSuit() or self.getNumber() == self.JOKER)
+        return (self.isTrumpSuit() or self.getNumber() == CardConstants.JOKER)
 
     # setTrumpSuit
     #
@@ -258,70 +201,6 @@ class Card(object):
         self.istrumpsuit = istrumpsuit
         return
 
-    # getNumbers
-    #
-    # Accessor for NUMBERS and JOKERNUMBER constant
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   list of valid numbers
-    @classmethod
-    def getNumbers(cls):
-        return list(cls.NUMBERWEIGHTS.keys()) + list(cls.JOKERNUMBERWEIGHT.keys())
-
-    # getNonJokerNumbers
-    #
-    # Accessor for NUMBERS constant
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   list of valid non joker numbers
-    @classmethod
-    def getNonJokerNumbers(cls):
-        return cls.NUMBERWEIGHTS.keys()
-
-    # getJokerNumber
-    #
-    # Accessor for JOKERNUMBER constant
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   list of valid joker numbers
-    @classmethod
-    def getJokerNumber(cls):
-        return cls.JOKERNUMBERWEIGHT.keys()
-
-    # getJokerSuits
-    #
-    # Accessor for JOKERSUITS constant
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   list of valid joker suits
-    @classmethod
-    def getJokerSuits(cls):
-        return cls.JOKERSUITWEIGHTS.keys()
-
-    # getSuits
-    #
-    # Accessor for SUITS constant
-    #
-    # args:
-    #   none
-    # returns:
-    #   list of valid suits
-    @classmethod
-    def getSuits(cls):
-        return cls.SUITWEIGHTS.keys()
-
     # getConstantNumberWeight
     #
     # Accessor for the relative weight of a number
@@ -333,9 +212,9 @@ class Card(object):
     #   weight of the given number
     @classmethod
     def getConstantNumberWeight(cls, number):
-        if (number == cls.JOKER):
-            return cls.JOKERNUMBERWEIGHT[number]
-        return cls.NUMBERWEIGHTS[number]
+        if (number == CardConstants.JOKER):
+            return CardConstants.JOKERNUMBERWEIGHT[number]
+        return CardConstants.NUMBERWEIGHTS[number]
 
     # getConstantSuitWeight
     #
@@ -348,32 +227,6 @@ class Card(object):
     #   weight of the given suit
     @classmethod
     def getConstantSuitWeight(cls, suit):
-        if (suit in cls.JOKERSUITS):
-            return cls.JOKERSUITWEIGHTS[suit]
-        return cls.SUITWEIGHTS[suit]
-
-    # getTrumpSuitWeight
-    #
-    # Special accessor for the weight of the trump suit
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   weight of the trump suit
-    @classmethod
-    def getTrumpSuitWeight(cls):
-        return cls.TRUMPSUITWEIGHT
-
-    # getTrumpNumberWeight
-    #
-    # Special accessor for the weight of the trump number
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   weight of the trump number
-    @classmethod
-    def getTrumpNumberWeight(cls):
-        return cls.TRUMPNUMBERWEIGHT
+        if (suit in CardConstants.JOKERSUITS):
+            return CardConstants.JOKERSUITWEIGHTS[suit]
+        return CardConstants.SUITWEIGHTS[suit]

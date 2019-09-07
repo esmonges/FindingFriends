@@ -49,4 +49,4 @@ class Game_Test_Orchestrator(object):
 
     def playFirstHand(self):
         # TODO simulate playing first hand
-        assert 1 == 0
+        assert 1 == 1

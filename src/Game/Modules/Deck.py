@@ -1,4 +1,5 @@
 from src.Game.Modules.Card import Card
+from src.Game.Modules import CardConstants
 from src.Game.Modules.Randomizer import Randomizer
 
 class Deck(object):
@@ -57,22 +58,22 @@ class Deck(object):
                 for
                     suit
                 in
-                    Card.getSuits()
+                    CardConstants.CARDSUITS
                 for
                     number
                 in
-                    Card.getNonJokerNumbers()
+                    CardConstants.NONJOKERNUMBERS
             ]
             self.deck += [
                 Card(suit, number)
                 for
                     suit
                 in
-                    Card.getJokerSuits()
+                    CardConstants.JOKERSUITS
                 for
                     number
                 in
-                    Card.getJokerNumber()
+                    [CardConstants.JOKER]
             ]
         return
 
