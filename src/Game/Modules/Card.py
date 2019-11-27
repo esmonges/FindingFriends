@@ -1,232 +1,130 @@
-from src.Game.Modules import CardConstants
+from src.Game.Modules.CardConstants import Suit, Rank
 
-JOKER = 'notajoker'
 
 class Card(object):
-    JOKER = 'Joker'
+    TRUMP_SUIT = None
+    TRUMP_RANK = None
 
-    # Card - Constructor
-    #
-    # Constructs a card, represented by a suit, a number,
-    # whether or not it is a trump number, and whether or not
-    # it is a trump suit. Note that istrumpsuit will normally
-    # not be specified, as we do not know the trump suit
-    # until long after the cards have been generated. It is mostly
-    # for debugging purposes
-    #
-    # Args:
-    #   suit: Suit of the card. Must be in SUITS or JOKERSUITS
-    #   number: Number of the card. Must be in NUMBERS
-    #   istrumpnumber: Optional. Is this card a trump number. Defaults
-    #       to false
-    #   istrumpsuit: Optional. Is the card in the trump suit. Note that this
-    #       is not normally known at the time the cards are constructed, and
-    #       should only be used for debugging purposes. Jokers have this
-    #       set to false as they have their own special suits, but will behave
-    #       as trumps (see isInTrumpSuit). Must be set to true for trump numbers
-    #       Defaults to False
-    #
-    # returns:
-    #   a Card object
-    def __init__(self, suit, number, istrumpnumber=False, istrumpsuit=False):
+    def __init__(self, suit: Suit, number: Rank, istrumpnumber=False, istrumpsuit=False):
+        """
+        Constructs a card, represented by a suit, a number,
+        whether or not it is a trump number, and whether or not
+        it is a trump suit.
+
+        Note that istrumpsuit will normally
+        not be specified, as we do not know the trump suit
+        until long after the cards have been generated. It is mostly
+        for debugging purposes
+
+        :param suit: Suit of the card. Must be in SUITS or JOKERSUITS
+        :param number: Number of the card. Must be in NUMBERS
+        :param istrumpnumber: Optional. Is this card a trump number. Defaults to false
+        :param istrumpsuit: Optional. Is the card in the trump suit. Note that this
+        is not normally known at the time the cards are constructed, and
+        should only be used for debugging purposes. Jokers have this
+        set to false as they have their own special suits, but will behave
+        as trumps (see isInTrumpSuit). Must be set to true for trump numbers
+        Defaults to False
+        """
         super(Card, self).__init__()
-
-        # Card should have a number and a suit
-        # If it is not a joker, it should be
-        # one of the standard suits. If it is a joker,
-        # it should be BIG or SMALL instead of one
-        # of the standard suits
-        assert number in CardConstants.NUMBERS, 'invalid number'
-        if (number == CardConstants.JOKER):
-            assert suit in CardConstants.JOKERSUITS, 'suit must be in joker suits for jokers'
-        else:
-            assert suit in CardConstants.CARDSUITS, 'invalid suit'
-
-        # Trump numbers are always trump suits
-        if (istrumpnumber):
-            assert istrumpsuit, 'trump numbers must be in the trump suit explicitly'
         self.suit = suit
         self.number = number
         self.istrumpnumber = istrumpnumber
         self.istrumpsuit = istrumpsuit
 
-    # __repr__
-    # Python representation for the card
     def __repr__(self):
+        """ Python representation for the card """
         return "%s(%r, %r, %r, %r)" % (
-        'Card', self.getSuit(), self.getNumber(), self.isTrumpNumber(), self.isTrumpSuit())
+        'Card', self.get_suit(), self.get_rank(), self.isTrumpNumber(), self.isTrumpSuit())
 
-    # __cmp__
-    # Comparator for the card based on weight. Note that this
-    # is only for display logic use, and will not dictate
-    # the relative strength of cards in the game
-    # def __cmp__(self, other):
-    #     # TODO: Kill this off and use __lt__ and __eq__
-    #     return self.getTotalWeight() - other.getTotalWeight()
+    def __lt__(self, other):
+        return self.getTotalWeight() < other.getTotalWeight()
 
-    # TODO: some way to make type annotation `CARD` instead of `object`?
-    def __lt__(self, other: object):
-        return self.getTotalWeight() - other.getTotalWeight() < 0
+    def __le__(self, other):
+        return self.getTotalWeight() <= other.getTotalWeight()
 
-    def __le__(self, other: object):
-        return self.getTotalWeight() - other.getTotalWeight() <= 0
-
-    def __eq__(self, other: object):
+    def __eq__(self, other):
         return self.suit == other.suit and self.getTotalWeight() == other.getTotalWeight()
 
-    # GetTotalWeight
-    #
-    # Gets the total weight for the Card based on its suit and number.
-    # This is only used for displaying the order of cards
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   The numeric weight for the card, based on its number and suit
     def getTotalWeight(self):
+        """
+        Gets the total weight for the Card based on its suit and number.
+        This is only used for displaying the order of cards
+        :return: The numeric weight for the card, based on its number and suit
+        """
         return self.getNumberWeight() + self.getSuitWeight()
 
-    # getNumberWeight
-    #
-    # Gets the weight of the number for this card, based on
-    # if the card is a trump number or not.
-    #
-    # args:
-    #   none
-    # returns:
-    #   weight of the card's number
     def getNumberWeight(self):
-        if (self.isTrumpNumber()):
-            return CardConstants.TRUMPNUMBERWEIGHT
-        else:
-            return Card.getConstantNumberWeight(self.getNumber())
+        """
+        Gets the weight of the number for this card, based on if the card is a trump number or not.
+        :return: weight of the card's number
+        """
+        return Rank.TRUMP.value if self.isTrumpNumber() else self.number.value
 
-    # getSuitWeight
-    #
-    # Gets the weight of the suit for this card, based on whether
-    # the card is trump suit
-    #
-    # args:
-    #   none
-    # returns:
-    #   weight of the card's suit
     def getSuitWeight(self):
-        if (self.isTrumpSuit()):
-            return CardConstants.TRUMPSUITWEIGHT
-        else:
-            return Card.getConstantSuitWeight(self.getSuit())
+        """
+        Gets the weight of the suit for this card, based on whether
+        the card is trump suit
+        :return: weight of the card's suit
+        """
+        return Suit.TRUMP.value if self.isTrumpSuit() else self.suit.value
 
-    # getSuit
-    #
-    # Accessor for self.suit
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   self.suit
-    def getSuit(self):
+    def get_suit(self) -> Suit:
+        """
+        Accessor for self.suit
+        :return: self.suit
+        """
         return self.suit
 
-    # getNumber
-    #
-    # Accessor for self.number
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   self.number
-    def getNumber(self):
+    def get_rank(self) -> Rank:
+        """
+        Accessor for self.number
+        :return: self.number
+        """
         return self.number
 
-    # isTrumpNumber
-    #
-    # Accessor for self.istrumpnumber
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   self.istrumpnumber
     def isTrumpNumber(self):
-        return self.istrumpnumber
+        """
+        Accessor for self.istrumpnumber
+        :return: self.istrumpnumber
+        """
+        return self.number == Card.TRUMP_RANK
 
-    # isTrumpSuit
-    #
-    # Accessor for self.istrumpsuit. Note that this
-    # is only if the card is specified as in the trump
-    # suit, not if it is in the trump suit. Jokers are the
-    # exemption to this flag. See isInTrumpSuit
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   self.istrumpsuit
     def isTrumpSuit(self):
-        return self.istrumpsuit
+        """
+        Accessor for self.istrumpsuit. Note that this
+        is only if the card is specified as in the trump
+        suit, not if it is in the trump suit. Jokers are the
+        exemption to this flag. See isInTrumpSuit
+        :return: self.istrumpsuit
+        """
+        return self.suit == Card.TRUMP_SUIT
 
-    # isInTrumpSuit
-    #
-    # Tells whether the card is in the trump suit. This includes
-    # cards that are explicitly in the trump suit (istrumpsuit == True)
-    # and cards that are implicitly in the trump suit (JOKERs). Assumes that
-    # trump numbers are always set to be in the trump suit correctly
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   True if the card is in the trump suit, False otherwise
     def isInTrumpSuit(self):
-        return (self.isTrumpSuit() or self.getNumber() == CardConstants.JOKER)
+        """
+        Tells whether the card is in the trump suit. This includes
+        cards that are explicitly in the trump suit (istrumpsuit == True)
+        and cards that are implicitly in the trump suit (JOKERs). Assumes that
+        trump numbers are always set to be in the trump suit correctly
 
-    # setTrumpSuit
-    #
-    # Sets the card to be in or out of the trump suit.
-    #
-    # args:
-    #   istrumpsuit: true or false
-    #
-    # returns:
-    #   nothing
-    #
-    # effects:
-    #   sets istrumpsuit for this card
+        :return: True if the card is in the trump suit, False otherwise
+        """
+        return self.isTrumpSuit() or self.get_rank() == Rank.JOKER
+
     def setTrumpSuit(self, istrumpsuit):
-        if (not istrumpsuit):
+        """
+        Sets the card to be in or out of the trump suit.
+        :param istrumpsuit: true or false
+        :return: sets istrumpsuit for this card
+        """
+        if not istrumpsuit:
             assert not self.isTrumpNumber(), 'trump numbers must be trump suit'
-        self.istrumpsuit = istrumpsuit
-        return
+        Card.set_trump_suit(self.get_suit()) if istrumpsuit else Card.set_trump_suit(None)
 
-    # getConstantNumberWeight
-    #
-    # Accessor for the relative weight of a number
-    #
-    # args:
-    #   number: key into NUMBERS
-    #
-    # returns:
-    #   weight of the given number
     @classmethod
-    def getConstantNumberWeight(cls, number):
-        if (number == CardConstants.JOKER):
-            return CardConstants.JOKERNUMBERWEIGHT[number]
-        return CardConstants.NUMBERWEIGHTS[number]
+    def set_trump_suit(cls, suit: Suit):
+        cls.TRUMP_SUIT = suit
 
-    # getConstantSuitWeight
-    #
-    # Accessor for the weight of a given suit
-    #
-    # args:
-    #   suit: key into SUITS or JOKERSUITS
-    #
-    # returns:
-    #   weight of the given suit
     @classmethod
-    def getConstantSuitWeight(cls, suit):
-        if (suit in CardConstants.JOKERSUITS):
-            return CardConstants.JOKERSUITWEIGHTS[suit]
-        return CardConstants.SUITWEIGHTS[suit]
+    def set_trump_rank(cls, rank: Rank):
+        cls.TRUMP_RANK = rank

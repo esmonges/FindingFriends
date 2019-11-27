@@ -1,6 +1,7 @@
 import unittest
 from src.Game.Modules.Card import Card
 from src.Game.Modules import CardConstants
+from src.Game.Modules.CardConstants import Suit, Rank
 
 class Card_Test(unittest.TestCase):
     def setUp(self):
@@ -48,63 +49,79 @@ class Card_Test(unittest.TestCase):
                         self.assertEqual(cardsequal, card1 == card2)
 
     def test_lt(self):
-        a = Card(suit='DIAMOND', number='ACE')
-        b = Card(suit='DIAMOND', number='TEN')
+        a = Card(suit=Suit.DIAMOND, number=Rank.ACE)
+        b = Card(suit=Suit.DIAMOND, number=Rank.TEN)
         self.assertFalse(a < b)
         self.assertFalse(a <= b)
         self.assertTrue(a > b)
         self.assertTrue(a >= b)
-        b = Card(suit='DIAMOND', number='ACE')
+        b = Card(suit=Suit.DIAMOND, number=Rank.ACE)
         self.assertFalse(a > b)
         self.assertTrue(a >= b)
         self.assertFalse(a < b)
         self.assertTrue(a <= b)
-        b = Card(suit='BIG', number='JOKER')
+        b = Card(suit=Suit.BIG, number=Rank.JOKER)
         self.assertFalse(a > b)
         self.assertFalse(a >= b)
         self.assertTrue(a < b)
         self.assertTrue(a <= b)
-        b = Card(suit='SPADE', number='TWO', istrumpnumber=True, istrumpsuit=True)
+        Card.set_trump_rank(Rank.TWO)
+        Card.set_trump_suit(Suit.SPADE)
+        b = Card(suit=Suit.SPADE, number=Rank.TWO)
         self.assertFalse(a > b)
         self.assertFalse(a >= b)
         self.assertTrue(a < b)
         self.assertTrue(a <= b)
-        b = Card(suit='CLUB', number='THREE', istrumpsuit=True)
+        Card.set_trump_suit(Suit.CLUB)
+        b = Card(suit=Suit.CLUB, number=Rank.THREE)
         self.assertFalse(a > b)
         self.assertFalse(a >= b)
         self.assertTrue(a < b)
         self.assertTrue(a <= b)
-        a = Card(suit='CLUB', number='FOUR', istrumpsuit=True)
+        a = Card(suit=Suit.CLUB, number=Rank.FOUR)
         self.assertTrue(a > b)
         self.assertTrue(a >= b)
         self.assertFalse(a < b)
         self.assertFalse(a <= b)
-        a = Card(suit='CLUB', number='FIVE', istrumpnumber=True, istrumpsuit=True)
+        Card.set_trump_rank(Rank.FIVE)
+        Card.set_trump_suit(Suit.CLUB)
+        a = Card(suit=Suit.CLUB, number=Rank.FIVE)
         self.assertTrue(a > b)
         self.assertTrue(a >= b)
         self.assertFalse(a < b)
         self.assertFalse(a <= b)
 
     def test_istrumpnumber(self):
-        a = Card(suit='DIAMOND', number='FIVE', istrumpnumber=True, istrumpsuit=True)
+        Card.set_trump_suit(Suit.DIAMOND)
+        Card.set_trump_rank(Rank.FIVE)
+        a = Card(suit=Suit.DIAMOND, number=Rank.FIVE)
         self.assertTrue(a.isTrumpNumber())
-        a = Card(suit='DIAMOND', number='FIVE')
+
+        Card.set_trump_suit(None)
+        Card.set_trump_rank(None)
+        a = Card(suit=Suit.DIAMOND, number=Rank.FIVE)
         self.assertFalse(a.isTrumpNumber())
 
     def test_istrumpsuit(self):
-        a = Card(suit='DIAMOND', number='FIVE')
+        a = Card(suit=Suit.DIAMOND, number=Rank.FIVE)
         self.assertFalse(a.isTrumpSuit())
         a.setTrumpSuit(istrumpsuit=True)
         self.assertTrue(a.isTrumpSuit())
-        a = Card(suit='DIAMOND', number='SIX', istrumpsuit=True)
+
+        Card.set_trump_suit(Suit.DIAMOND)
+        a = Card(suit=Suit.DIAMOND, number=Rank.SIX)
         self.assertTrue(a.isTrumpSuit())
         a.setTrumpSuit(istrumpsuit=False)
         self.assertFalse(a.isTrumpSuit())
-        a = Card(suit='DIAMOND', number='TEN', istrumpnumber=True, istrumpsuit=True)
+
+        Card.set_trump_suit(Suit.DIAMOND)
+        Card.set_trump_rank(Rank.TEN)
+        a = Card(suit=Suit.DIAMOND, number=Rank.TEN)
         self.assertTrue(a.isTrumpSuit())
         with self.assertRaises(AssertionError):
             a.setTrumpSuit(False)
+
         with self.assertRaises(AssertionError):
-            Card(suit='DIAMOND', number='FOUR', istrumpnumber=True, istrumpsuit=False)
-
-
+            Card.set_trump_rank(Rank.FOUR)
+            Card.set_trump_suit(None)
+            Card(suit=Suit.DIAMOND, number=Rank.FOUR)

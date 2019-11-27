@@ -1,3 +1,36 @@
+from enum import Enum, unique
+
+@unique
+class Suit(Enum):
+    CLUB = 0x10
+    SPADE = 0x20
+    HEART = 0x30
+    DIAMOND = 0x40
+    TRUMP = 0x50
+    SMALL = 0xe0
+    BIG = 0xf0
+
+
+
+@unique
+class Rank(Enum):
+    TWO = 0x01
+    THREE = 0x02
+    FOUR = 0x03
+    FIVE = 0x04
+    SIX = 0x05
+    SEVEN = 0x06
+    EIGHT = 0x07
+    NINE = 0x08
+    TEN = 0x09
+    JACK = 0x0a
+    QUEEN = 0x0b
+    KING = 0x0c
+    ACE = 0x0d
+    TRUMP = 0x0e
+    JOKER = 0x0f
+
+
 # Suits
 CLUB = 'CLUB'
 SPADE = 'SPADE'
