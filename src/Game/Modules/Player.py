@@ -1,80 +1,70 @@
 import bisect
+import uuid
 from src.Game.Modules.Card import Card
 
+
 class Player(object):
-    """class representing a Player in the game"""
-    hand = False  # type: List[Card]
+    def __init__(self, name=str(), hand=list()):
+        """
+        Player - constructor
 
+        A player has a name and a hand of cards. Constructs the player object
+        based on their name and a list of cards (defaults to empty list)
 
-    # Player - constructor
-    #
-    # A player has a name and a hand of cards. Constructs the player object
-    # based on their name and a list of cards (defaults to empty list)
-    #
-    # args:
-    #   name: string that is the name of the player
-    #   hand: Optional; list of Card objects. Defaults to []
-    #
-    # returns:
-    #   Player object
-    def __init__(self, name="", hand=False):
+        :param name: string that is the name of the player
+        :param hand: Optional; list of Card objects. Defaults to []
+        """
         super(Player, self).__init__()
-        self.name = name
-        if not hand:
-            hand = [] # Do this to get around default param being a ref; maybe this is me just not understanding python
-        hand.sort()
+        self.display_name = name
+        self.user_uuid = str(uuid.uuid4())
         self.hand = hand
 
-    def sethand(self, hand=[]):
+    def set_hand(self, hand=list):
         self.hand = hand
 
-    # __repr__
-    # Python representation for this Player
     def __repr__(self):
-        return "Player(%r, %r)" % (self.name, self.hand)
+        """
+        Python representation for this Player
+        :return:
+        """
+        return "Player(%r, %r)" % (self.display_name, self.hand)
 
-    # __str__
-    # String representing the player
     def __str__(self):
-        return "%r %r" % (self.name, str(self.hand))
+        """
+        String representing the player
+        :return:
+        """
+        return "%r %r" % (self.display_name, str(self.hand))
 
     def __eq__(self, other):
         """
-
         :type other: Player
         """
-        return self.getIdentifier() == other.getIdentifier()
+        try:
+            return self.get_info() == other.get_info()
+        except AttributeError:
+            return False
 
-    def getIdentifier(self):
-        # TODO: Better way to ID players than just name?
-        return self.name
+    def get_info(self):
+        """
+        Info given is the name of the player and the uuid
+        :return:
+        """
+        return self.display_name, self.user_uuid
 
-    # insertCard
-    #
-    # Method to stick a card into a player's hand
-    #
-    # args:
-    #   card: Card object to put into the hand
-    #
-    # returns:
-    #   nothing
-    #
-    # effects:
-    #   inserts card into self.hand in a sorted manner
-    def addCardToHand(self, card):
-        assert type(card) is Card, 'card must be a Card'
-        bisect.insort(self.hand, card);
-        return
+    def add_card_to_hand(self, card: Card):
+        """
+        Method to stick a card into a player's hand
+        inserts card into self.hand in a sorted manner
+        :param card: Card object to put into the hand
+        :return:
+        """
+        bisect.insort(self.hand, card)
 
-    # getHand
-    #
-    # accessor for hand
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   self.hand
-    def getHand(self):
+    def get_hand(self):
+        """
+        The hand of the player
+        :return: array of cards
+        """
         return self.hand
 
