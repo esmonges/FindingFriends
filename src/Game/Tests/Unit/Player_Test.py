@@ -3,18 +3,21 @@ import copy
 from src.Game.Modules.Player import Player
 from src.Game.Modules.Card import Card
 from src.Game.Modules import CardConstants
+from src.Game.Modules.CardConstants import Suit, Rank
 
 
 class Player_Test(unittest.TestCase):
     def test_insertCard(self):
         p = Player('Teddy', [])
-        a = Card(suit=CardConstants.DIAMOND, number=CardConstants.FIVE)
-        b = Card(suit=CardConstants.CLUB, number=CardConstants.TWO)
-        c = Card(suit=CardConstants.CLUB, number=CardConstants.THREE)
-        d = Card(suit=CardConstants.HEART, number=CardConstants.SIX, istrumpnumber=True, istrumpsuit=True)
-        e = Card(suit=CardConstants.HEART, number=CardConstants.FIVE, istrumpsuit=True)
-        f = Card(number=CardConstants.JOKER, suit=CardConstants.SMALL)
-        g = Card(number=CardConstants.JOKER, suit=CardConstants.BIG)
+        Card.set_trump_suit(Suit.HEART)
+        Card.set_trump_rank(Rank.SIX)
+        a = Card(suit=Suit.DIAMOND, number=Rank.FIVE)
+        b = Card(suit=Suit.CLUB, number=Rank.TWO)
+        c = Card(suit=Suit.CLUB, number=Rank.THREE)
+        d = Card(suit=Suit.HEART, number=Rank.SIX)
+        e = Card(suit=Suit.HEART, number=Rank.FIVE)
+        f = Card(suit=Suit.SMALL, number=Rank.JOKER)
+        g = Card(suit=Suit.BIG, number=Rank.JOKER)
 
         p.add_card_to_hand(a)
         self.assertTrue(p.get_hand() == [copy.deepcopy(a)])

@@ -5,7 +5,7 @@ class Card(object):
     TRUMP_SUIT = None
     TRUMP_RANK = None
 
-    def __init__(self, suit: Suit, number: Rank, istrumpnumber=False, istrumpsuit=False):
+    def __init__(self, suit: Suit, number: Rank):
         """
         Constructs a card, represented by a suit, a number,
         whether or not it is a trump number, and whether or not
@@ -18,19 +18,10 @@ class Card(object):
 
         :param suit: Suit of the card. Must be in SUITS or JOKERSUITS
         :param number: Number of the card. Must be in NUMBERS
-        :param istrumpnumber: Optional. Is this card a trump number. Defaults to false
-        :param istrumpsuit: Optional. Is the card in the trump suit. Note that this
-        is not normally known at the time the cards are constructed, and
-        should only be used for debugging purposes. Jokers have this
-        set to false as they have their own special suits, but will behave
-        as trumps (see isInTrumpSuit). Must be set to true for trump numbers
-        Defaults to False
         """
         super(Card, self).__init__()
         self.suit = suit
         self.number = number
-        self.istrumpnumber = istrumpnumber
-        self.istrumpsuit = istrumpsuit
 
     def __repr__(self):
         """ Python representation for the card """
