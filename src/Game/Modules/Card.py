@@ -119,3 +119,8 @@ class Card(object):
     @classmethod
     def set_trump_rank(cls, rank: Rank):
         cls.TRUMP_RANK = rank
+
+    @classmethod
+    def clear_trumps(cls):
+        cls.TRUMP_SUIT = None
+        cls.TRUMP_RANK = None

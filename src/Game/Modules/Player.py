@@ -22,6 +22,10 @@ class Player(object):
     def set_hand(self, hand=list):
         self.hand = hand
 
+    @property
+    def name(self):
+        return self.display_name
+
     def __repr__(self):
         """
         Python representation for this Player

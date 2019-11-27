@@ -38,13 +38,8 @@ class Game(object):
     def __str__(self):
         return "%r" % (self.players)
 
-    # addPlayer
-    #
-    # Adds a player to the game
-    #
-    # args:
-    #   player: Player object to add to the game
-    def registerPlayer(self, player):
+    def registerPlayer(self, player: Player):
+        """ Adds a player to the game """
         self.players.append(player)
 
     def startRound(self):

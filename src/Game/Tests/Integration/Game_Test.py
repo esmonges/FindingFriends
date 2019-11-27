@@ -1,6 +1,6 @@
 import unittest
 from src.Game.Modules.Randomizer import Randomizer
-from src.Game.Modules import CardConstants
+from src.Game.Modules.CardConstants import Suit, Rank
 from src.Game.Test_Utils.Game_Test_Orchestrator import Game_Test_Orchestrator
 from src.Game.Test_Utils.Fake_Ranomizer import Fake_Randomizer
 
@@ -35,7 +35,7 @@ class Game_Test(unittest.TestCase):
         self.orchestrator.registerPlayers()
         self.orchestrator.startRound()
         assert self.orchestrator.game.players == self.orchestrator.game.currentRound.players
-        assert self.orchestrator.game.currentRound.trumpNumber == CardConstants.TWO
+        assert self.orchestrator.game.currentRound.trumpNumber == Rank.TWO
 
     # choose who draws first
     def test_it_chooses_a_random_start_player(self):
@@ -66,14 +66,14 @@ class Game_Test(unittest.TestCase):
         self.orchestrator.initializeRoundDeck()
         deck = self.orchestrator.game.currentRound.deck.deck
         assert len(deck) == 108
-        assert deck[0].suit == CardConstants.CLUB
-        assert deck[12].suit == CardConstants.CLUB
-        assert deck[13].suit == CardConstants.SPADE
-        assert deck[25].suit == CardConstants.SPADE
-        assert deck[26].suit == CardConstants.HEART
-        assert deck[38].suit == CardConstants.HEART
-        assert deck[39].suit == CardConstants.DIAMOND
-        assert deck[51].suit == CardConstants.DIAMOND
+        assert deck[0].suit == Suit.CLUB
+        assert deck[12].suit == Suit.CLUB
+        assert deck[13].suit == Suit.SPADE
+        assert deck[25].suit == Suit.SPADE
+        assert deck[26].suit == Suit.HEART
+        assert deck[38].suit == Suit.HEART
+        assert deck[39].suit == Suit.DIAMOND
+        assert deck[51].suit == Suit.DIAMOND
 
     # shuffle the deck
     def test_it_shuffles_a_deck_randomly(self):
@@ -94,7 +94,7 @@ class Game_Test(unittest.TestCase):
                 suitCounts[deck[i].suit] += 1
 
         for suit in suitCounts:
-            if suit == CardConstants.BIG or suit == CardConstants.SMALL:
+            if suit == Suit.BIG or suit == Suit.SMALL:
                 assert suitCounts[suit] == 2
             else:
                 assert suitCounts[suit] == 26
@@ -111,10 +111,10 @@ class Game_Test(unittest.TestCase):
             .shuffleRoundDeck()
 
         deck = self.orchestrator.game.currentRound.deck.deck
-        assert deck[0].suit == CardConstants.BIG
-        assert deck[0].number == CardConstants.JOKER
-        assert deck[1].suit == CardConstants.SMALL
-        assert deck[1].number == CardConstants.JOKER
+        assert deck[0].suit == Suit.BIG
+        assert deck[0].number == Rank.JOKER
+        assert deck[1].suit == Suit.SMALL
+        assert deck[1].number == Rank.JOKER
 
     # Have people go around drawing until the deck is empty?
     # make someone declare alpha inside of it?

@@ -1,151 +1,71 @@
 from src.Game.Modules.Card import Card
-from src.Game.Modules import CardConstants
+from src.Game.Modules.CardConstants import Suit, Rank, CARDSUITS,JOKERSUITS, NONJOKERNUMBERS
 from src.Game.Modules.Randomizer import Randomizer
 
-class Deck(object):
-    """Object representing a deck that can contain any multiple of 54 cards"""
-    deck = False  # type: List[Card]
-    cardsets = 0
-    randomizer = False
 
-    # Deck - Constructor
-    #
-    # Constructs a deck with a given number of cardsets. For each cardset, an
-    # individual 54 card deck will be constructed and pushed to the playing deck
-    #
-    # args:
-    #   cardsets: Number of sets of 54 cards to use
-    #
-    # returns:
-    #   Deck object
-    def __init__(self, cardsets, randomizer=False):
+class Deck(object):
+    def __init__(self, cardsets:int, randomizer=Randomizer()):
+        """
+        Object representing a deck that can contain any multiple of 54 cards
+        For each cardset, an individual 54 card deck will be constructed and pushed to the playing deck
+
+        :param cardsets: Number of sets of 54 cards to use
+        :param randomizer: Object that shuffles the deck
+        """
         super(Deck, self).__init__()
-        if not randomizer:
-            randomizer = Randomizer()
         assert (cardsets >= 1)
         self.cardsets = cardsets
         self.randomizer = randomizer
+        self.deck = list()
 
-    # __repr__
-    # Python representation for this deck
     def __repr__(self):
+        """Python representation for this deck"""
         return "%s(%r)" % ('Deck', self.cardsets)
 
-    # __str__
-    # string representation of the deck
     def __str__(self):
+        """ string representation of the deck """
         return str(self.deck)
 
-    # generateDeck
-    #
-    # Generates a deck based on the number of cardsets
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   nothing
-    #
-    # effects:
-    #   Creates a deck of self.cardsets * 54 cards containing self.cardsets
-    #   copies of each individual card
     def generateDeck(self):
-        self.deck = []
-        # Generate full deck
-        for i in range(self.getCardsets()):
-            self.deck += [
-                Card(suit, number)
-                for
-                    suit
-                in
-                    CardConstants.CARDSUITS
-                for
-                    number
-                in
-                    CardConstants.NONJOKERNUMBERS
-            ]
-            self.deck += [
-                Card(suit, number)
-                for
-                    suit
-                in
-                    CardConstants.JOKERSUITS
-                for
-                    number
-                in
-                    [CardConstants.JOKER]
-            ]
-        return
+        """
+        Generates a deck based on the number of cardsets
+        Creates a deck of self.cardsets * 54 cards containing self.cardsets copies of each individual card
+        :return:
+        """
+        self.deck = Deck.generate_single_deck() * self.getCardsets()
 
-    # shuffleDeck
-    #
-    # Randomizes the deck
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   nothing
-    #
-    # effects:
-    #   randomizes self.deck
+    @staticmethod
+    def generate_single_deck():
+        """
+        Generates a full list of Cards with jokers included
+        :return: a list of cards
+        """
+        non_joker_card = [Card(suit, number) for suit in CARDSUITS for number in NONJOKERNUMBERS]
+        joker_card = [Card(suit, number) for suit in JOKERSUITS for number in [Rank.JOKER]]
+        return non_joker_card + joker_card
+
     def shuffleDeck(self):
+        """Randomizes the deck"""
         self.deck = self.randomizer.shuffle(self.deck)
-        return
 
-    # getCardsets
-    #
-    # Accessor for self.cardsets
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   self.cardsets
     def getCardsets(self):
+        """ Number of decks to generate"""
         return self.cardsets
 
-    # getDeck
-    #
-    # Accessor for self.deck
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   self.deck
     def getDeck(self):
+        """Accessor for self.deck"""
         return self.deck
 
-    # getSize
-    #
-    # Gets the size of the deck
-    #
-    # args:
-    #   none
-    #
-    # return:
-    #   size of the deck
     def getSize(self):
+        """Gets the size of the deck"""
         return len(self.deck)
 
-    def isEmpty(self):
-        # type: () -> bool
+    def isEmpty(self) -> bool:
+        """A check if the deck is empty"""
         return self.getSize() == 0
 
-    # draw
-    #
-    # Draws a card off of the deck
-    #
-    # args:
-    #   none
-    #
-    # returns:
-    #   top card of the deck
-    #
-    # effects:
-    #   removes top card from the deck
     def draw(self):
+        """removes top card from the deck"""
         return self.deck.pop()
 
 

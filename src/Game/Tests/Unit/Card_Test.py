@@ -8,28 +8,7 @@ class Card_Test(unittest.TestCase):
         self.numbers = CardConstants.NUMBERS
         self.suits = CardConstants.CARDSUITS
         self.jokersuits = CardConstants.JOKERSUITS
-
-    def test_allSuits(self):
-        for suit in self.suits:
-            for number in self.numbers:
-                # Special case for jokers
-                if (number == CardConstants.JOKER):
-                    with self.assertRaises(AssertionError):
-                        Card(suit=suit, number=number)
-                else:
-                    Card(suit=suit, number=number)
-
-    def test_jokerSuits(self):
-        for suit in self.jokersuits:
-            Card(suit=suit, number=CardConstants.JOKER)
-
-    def test_badSuit(self):
-        with self.assertRaises(AssertionError):
-            Card(suit='LOLNO', number=CardConstants.ACE)
-
-    def test_badNumber(self):
-        with self.assertRaises(AssertionError):
-            Card(suit=CardConstants.SPADE, number='TREEFIDDY')
+        Card.clear_trumps()
 
     def test_eq(self):
         for suit1 in self.suits:
@@ -38,8 +17,8 @@ class Card_Test(unittest.TestCase):
                 for number1 in self.numbers:
                     for number2 in self.numbers:
                         if (
-                            (number1 == CardConstants.JOKER and suit1 not in self.jokersuits)
-                            or (number2 == CardConstants.JOKER and suit2 not in self.jokersuits)
+                            (number1 == Rank.JOKER and suit1 not in self.jokersuits)
+                            or (number2 == Rank.JOKER and suit2 not in self.jokersuits)
                         ):
                             continue
                         numbersequal = (number1 == number2)
@@ -48,7 +27,8 @@ class Card_Test(unittest.TestCase):
                         card2 = Card(suit=suit2, number=number2)
                         self.assertEqual(cardsequal, card1 == card2)
 
-    def test_lt(self):
+    def test_normal_ranking(self):
+        """This unit test. Test if the normal card rankings work"""
         a = Card(suit=Suit.DIAMOND, number=Rank.ACE)
         b = Card(suit=Suit.DIAMOND, number=Rank.TEN)
         self.assertFalse(a < b)
@@ -65,24 +45,31 @@ class Card_Test(unittest.TestCase):
         self.assertFalse(a >= b)
         self.assertTrue(a < b)
         self.assertTrue(a <= b)
+
+    def test_trump_rankings(self):
+        """This unit test, test if the Trump cards escalate value"""
         Card.set_trump_rank(Rank.TWO)
         Card.set_trump_suit(Suit.SPADE)
+        a = Card(suit=Suit.DIAMOND, number=Rank.ACE)
         b = Card(suit=Suit.SPADE, number=Rank.TWO)
         self.assertFalse(a > b)
         self.assertFalse(a >= b)
         self.assertTrue(a < b)
         self.assertTrue(a <= b)
+
         Card.set_trump_suit(Suit.CLUB)
         b = Card(suit=Suit.CLUB, number=Rank.THREE)
         self.assertFalse(a > b)
         self.assertFalse(a >= b)
         self.assertTrue(a < b)
         self.assertTrue(a <= b)
+
         a = Card(suit=Suit.CLUB, number=Rank.FOUR)
         self.assertTrue(a > b)
         self.assertTrue(a >= b)
         self.assertFalse(a < b)
         self.assertFalse(a <= b)
+
         Card.set_trump_rank(Rank.FIVE)
         Card.set_trump_suit(Suit.CLUB)
         a = Card(suit=Suit.CLUB, number=Rank.FIVE)
@@ -120,8 +107,3 @@ class Card_Test(unittest.TestCase):
         self.assertTrue(a.isTrumpSuit())
         with self.assertRaises(AssertionError):
             a.setTrumpSuit(False)
-
-        with self.assertRaises(AssertionError):
-            Card.set_trump_rank(Rank.FOUR)
-            Card.set_trump_suit(None)
-            Card(suit=Suit.DIAMOND, number=Rank.FOUR)

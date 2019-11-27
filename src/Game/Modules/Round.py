@@ -53,7 +53,7 @@ class Round(object):
         self.deck.shuffleDeck()
 
     def drawFromDeckForCurrentPlayer(self):
-        self.players[self.currentDrawPlayerIndex].addCardToHand(self.deck.draw())
+        self.players[self.currentDrawPlayerIndex].add_card_to_hand(self.deck.draw())
         self.currentDrawPlayerIndex = (self.currentDrawPlayerIndex + 1) % len(self.players)
 
     def declareTrumpSuitByPlayer(self, player, cards):
@@ -73,7 +73,7 @@ class Round(object):
         if playerDoesHaveCardsUsedToCall:
             if self.currentAlphaPlayerIndex is False:
                 self.currentAlphaPlayerIndex = playerCallingIndex
-            self.previouslyDeclaredSetByPlayer[player.getIdentifier()] = cards
+            self.previouslyDeclaredSetByPlayer[player.get_info()] = cards
             self.trumpSuit = cards[0].suit
             self.trumpSuitDeclarationLength = len(cards)
         else:
@@ -87,7 +87,7 @@ class Round(object):
         :type callingPlayer: Player
         :type cards: List[Card]
         """
-        if callingPlayer.getIdentifier() in self.previouslyDeclaredSetByPlayer.keys()\
+        if callingPlayer.get_info() in self.previouslyDeclaredSetByPlayer.keys()\
                 and self.previouslyDeclaredSetByPlayer[callingPlayer.getIdentifier()][0].suit == cards[0].suit:
             if len(cards) < self.trumpSuitDeclarationLength:
                 raise ValueError(self.MORE_IF_PREVIOUSLY_DECLARED_ERROR)

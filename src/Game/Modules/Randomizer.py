@@ -1,5 +1,6 @@
 import random
 
+
 # Thin wrapper for mockability
 class Randomizer(object):
     def __init__(self):
