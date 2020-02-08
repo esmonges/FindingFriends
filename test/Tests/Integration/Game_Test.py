@@ -1,8 +1,8 @@
 import unittest
 from src.Game.Modules.Randomizer import Randomizer
 from src.Game.Modules.CardConstants import Suit, Rank
-from src.Game.Test_Utils.Game_Test_Orchestrator import Game_Test_Orchestrator
-from src.Game.Test_Utils.Fake_Ranomizer import Fake_Randomizer
+from test.Test_Utils.Game_Test_Orchestrator import Game_Test_Orchestrator
+from test.Test_Utils import Fake_Randomizer
 
 
 class Game_Test(unittest.TestCase):

@@ -9,7 +9,7 @@ future commits)
 
 # LEGACY
 
-Application to play Finding Friends aka Chinese Bridge (https://en.wikipedia.org/wiki/Sheng_Ji)
+Application to play Finding Friends aka Chinese Bridge (https://www.pagat.com/kt5/pengyou.html)
 
 Mostly a python backend, webapp frontend, likely will be React/Redux down the line.
 

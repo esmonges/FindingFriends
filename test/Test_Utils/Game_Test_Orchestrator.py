@@ -1,6 +1,7 @@
 from src.Game.Modules.Player import Player
-from src.Game.Test_Utils.Fake_Ranomizer import Fake_Randomizer
+from test.Test_Utils import Fake_Randomizer
 from src.Game.Modules.Game import Game
+
 
 class Game_Test_Orchestrator(object):
     game = False  # type: Game
