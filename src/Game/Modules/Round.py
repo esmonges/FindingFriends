@@ -27,16 +27,8 @@ class Round(object):
     MORE_IF_PREVIOUSLY_DECLARED_ERROR = 'Must declare with at least as many cards as were previously declared'
     MORE_TO_REDECLARE_ERROR = 'Must declare with more cards if you are not a player that has previously declared'
 
-
-    def __init__(self, players=False, randomizer=False, trumpNumber=0):
+    def __init__(self, players=[], randomizer=Randomizer(), trumpNumber=CardConstants.NUMBERS[0]):
         super(Round, self).__init__()
-        if not players:
-            players = []
-        if not randomizer:
-            randomizer = Randomizer()
-        if not trumpNumber:
-            trumpNumber = CardConstants.NUMBERS[0]
-
         self.players = players
         self.randomizer = randomizer
         self.trumpNumber = trumpNumber
