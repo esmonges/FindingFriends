@@ -1,7 +1,9 @@
 import unittest
+from unittest.mock import MagicMock
 from src.Game.Modules.Card import Card
 from src.Game.Modules import CardConstants
 from src.Game.Modules.CardConstants import Suit, Rank
+
 
 class Card_Test(unittest.TestCase):
     def setUp(self):
