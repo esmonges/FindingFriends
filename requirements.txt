@@ -10,7 +10,7 @@ Flask-SocketIO==2.8.2
 Flask-SQLAlchemy==2.1
 Flask-WTF==0.14
 itsdangerous==0.24
-Jinja2==2.8.1
+Jinja2==2.11.3
 MarkupSafe==0.23
 passlib==1.7.0
 pycparser==2.17
